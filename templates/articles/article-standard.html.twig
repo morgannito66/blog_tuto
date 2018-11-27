@@ -19,7 +19,7 @@
 
         <div class="entry__media col-full">
             <div class="entry__post-thumb">
-                <img src="{{ asset(article.vignette) }}"
+                <img src="{{ asset(article.privateThumb) | imagine_filter('art_thumb') }}"
                      sizes="(max-width: 2000px) 100vw, 2000px" alt="">
             </div>
         </div>
@@ -40,15 +40,22 @@
         <div class="col-full entry__main">
             {{article.content | raw}}
 
-            <div class="entry__taxonomies">
-                <div class="entry__cat">
+            <div class="entry__taxonomies entries">
+                <div class="entry__cat col-block">
                     <h5>Catégorie : </h5>
                     <span class="entry__tax-list">
-                        <a href="#">{{article.category.name}}</a>
+                        <a href="{{ path('category', {'id' : article.category.id}) }}">{{article.category.name}}</a>
                     </span>
-                </div> <!-- end entry__cat -->
+                </div>
 
-                <div class="entry__tags">
+                <div class="entry__cat col-block">
+                    <h5>Vues : </h5>
+                    <span class="entry__tax-list">
+                        {{article.vue}}
+                    </span>
+                </div>
+
+                <div class="entry__tags col-block">
                     <h5>Tags: </h5>
                     <span class="entry__tax-list entry__tax-list--pill">
                       {% for tag in article.tags %}
@@ -59,7 +66,7 @@
             </div> <!-- end s-content__taxonomies -->
 
             <div class="entry__author">
-                <img src="{{ asset("assets/img/avatars/user-03.jpg") }}" alt="">
+                <img src="{{ asset("assets/img/avatars/perso.jpg") }}" alt="">
 
                 <div class="entry__author-about">
                     <h5 class="entry__author-name">
@@ -83,15 +90,15 @@
     <div class="s-content__entry-nav">
         <div class="row s-content__nav">
             <div class="col-six s-content__prev">
-                <a href="#0" rel="prev">
-                    <span>Article précédent</span>
-                    The Pomodoro Technique Really Works.
+                <a href="{{ path('article-standard', {'id' : recentArticle.id}) }}" rel="prev">
+                    <span>Article récent</span>
+                    {{ recentArticle.title }}
                 </a>
             </div>
             <div class="col-six s-content__next">
-                <a href="#0" rel="next">
-                    <span>Article suivant</span>
-                    3 Benefits of Minimalism In Interior Design.
+                <a href="{{ path('article-standard', {'id' : articleCat.id}) }}" rel="next">
+                    <span>Article de la même catégorie</span>
+                    {{ articleCat.title }}
                 </a>
             </div>
         </div>

@@ -10,6 +10,7 @@ class aCategoryFixtures extends Fixture
 {
 
   public const CAT_HTML = 'default';
+  public const CAT_SYMFONY = 'default2';
 
   public function load(ObjectManager $manager)
   {
@@ -36,6 +37,7 @@ class aCategoryFixtures extends Fixture
 
       // other fixtures can get this object using the CategoryFixtures::CONSTANT
       $this->addReference(self::CAT_HTML, $categoryHTML);
+      $this->addReference(self::CAT_SYMFONY, $categorySYMF);
 
       $manager->flush();
   }

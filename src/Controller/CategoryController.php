@@ -15,9 +15,12 @@ class CategoryController extends AbstractController
      */
     public function category(Category $category)
     {
+      $articles = $category->getArticles();
+
         return $this->render('category/category.html.twig', [
             'controller_name' => $category->getName(),
             'category' => $category,
+            'articles' => $articles,
         ]);
     }
 

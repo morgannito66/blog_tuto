@@ -34,3 +34,9 @@ services:
             class: Twig_Extensions_Extension_Text
             tags:
                 - { name: twig.extension }
+
+doctrine:
+     orm:
+         dql:
+             numeric_functions:
+                 rand: DoctrineExtensions\Query\Mysql\Rand

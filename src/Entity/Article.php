@@ -24,7 +24,7 @@ class Article
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $vignette;
+    private $privateThumb;
 
     /**
      * @ORM\Column(type="text")
@@ -52,6 +52,16 @@ class Article
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $publicThumb;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $vue;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,14 +79,14 @@ class Article
         return $this;
     }
 
-    public function getVignette(): ?string
+    public function getPrivateThumb(): ?string
     {
-        return $this->vignette;
+        return $this->privateThumb;
     }
 
-    public function setVignette(string $vignette): self
+    public function setPrivateThumb(string $privateThumb): self
     {
-        $this->vignette = $vignette;
+        $this->privateThumb = $privateThumb;
 
         return $this;
     }
@@ -139,5 +149,34 @@ class Article
         $this->type = $type;
 
         return $this;
+    }
+
+    public function getPublicThumb(): ?string
+    {
+        return $this->publicThumb;
+    }
+
+    public function setPublicThumb(string $publicThumb): self
+    {
+        $this->publicThumb = $publicThumb;
+
+        return $this;
+    }
+
+    public function getVue(): ?int
+    {
+        return $this->vue;
+    }
+
+    public function setVue(int $vue): self
+    {
+        $this->vue = $vue;
+
+        return $this;
+    }
+
+    public function add1Vue(): void
+    {
+      $this->vue = $this->vue + 1;
     }
 }
