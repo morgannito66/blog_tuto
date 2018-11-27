@@ -4,16 +4,18 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Article;
 
 class ArticlesController extends AbstractController
 {
     /**
-     * @Route("/article-standard", name="article-standard")
+     * @Route("/article-standard/{id}", name="article-standard")
      */
-    public function article_standard()
+    public function article_standard(Article $article)
     {
         return $this->render('articles/article-standard.html.twig', [
-            'controller_name' => 'Article standard',
+            'controller_name' => $article->getTitle(),
+            'article' => $article,
         ]);
     }
 

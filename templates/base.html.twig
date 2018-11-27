@@ -120,19 +120,14 @@
                 <li class="current"><a href="{{ path('index') }}" title="">Accueil</a></li>
                 <li class="has-children">
                     <a href="#0" title="">Catégories</a>
-                    <ul class="sub-menu">
-                        <li><a href="{{ path('category') }}">HTML</a></li>
-                        <li><a href="{{ path('category') }}">CSS</a></li>
-                        <li><a href="{{ path('category') }}">JS</a></li>
-                        <li><a href="{{ path('category') }}">Symfony 4</a></li>
-                        <li><a href="{{ path('category') }}">C#</a></li>
-                        {# <li><a href="{{ path('category') }}">Work</a></li> #}
+                    <ul class="sub-menu menu-categorys">
+
                     </ul>
                 </li>
                 <li class="has-children">
                     <a href="#0" title="">Les tutoriels</a>
                     <ul class="sub-menu">
-                        <li><a href="{{ path('article-standard') }}">Tutoriels écrit</a></li>
+                        <li><a href="">Tutoriels écrit</a></li>
                         <li><a href="{{ path('article-video') }}">Tutoriels vidéo</a></li>
                         {# <li><a href="single-standard.html">Standard Post</a></li> #}
                     </ul>
@@ -228,13 +223,8 @@
                     <div class="col-six md-six mob-full categories">
                         <h3>Categories</h3>
 
-                        <ul class="linklist">
-                            <li><a href="#0">Lifestyle</a></li>
-                            <li><a href="#0">Travel</a></li>
-                            <li><a href="#0">Recipes</a></li>
-                            <li><a href="#0">Management</a></li>
-                            <li><a href="#0">Health</a></li>
-                            <li><a href="#0">Creativity</a></li>
+                        <ul class="linklist linklist-category">
+
                         </ul>
                     </div> <!-- end categories -->
 
@@ -242,12 +232,12 @@
                         <h3>Site Links</h3>
 
                         <ul class="linklist">
-                            <li><a href="#0">Home</a></li>
-                            <li><a href="#0">Blog</a></li>
-                            <li><a href="#0">Styles</a></li>
-                            <li><a href="#0">About</a></li>
-                            <li><a href="#0">Contact</a></li>
-                            <li><a href="#0">Privacy Policy</a></li>
+                            <li><a href="{{path('index')}}">Accueil</a></li>
+                            <li><a href="{{path('about')}}">À propos</a></li>
+                            <li><a href="{{path('contact')}}">Contactez-nous</a></li>
+                            <li><a href="#">Informations légales</a></li>
+                            <!-- <li><a href="#0">Contact</a></li>
+                            <li><a href="#0">Privacy Policy</a></li> -->
                         </ul>
                     </div> <!-- end sitelinks -->
                 </div>
@@ -346,7 +336,28 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
     <script src="{{asset('assets/Semantic-UI/semantic.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins.js')}}"></script>
     <script src="{{asset('assets/js/main.js')}}"></script>
-    {% block javascripts %}{% endblock %}
+    {% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            //ajax for cart
+            $.ajax({
+                async: true,
+                type: 'POST',
+                url: "{{ path('getCategorys') }}",
+                success: function (data) {
+                    console.log(data);
+                    $.each(data, function(i, v) {
+                        var url = '{{ path("category", {"id": "region_id"}) }}';
+                        url = url.replace("region_id", v.id);
+                        resultHTML = '<li><a href="'+url+'">'+v.name+'</a></li>';
+                        $('.menu-categorys').append(resultHTML);
+                        $('.linklist-category').append(resultHTML);
+                    })
+                },
+            });
+        });
+    </script>
+    {% endblock %}
 
 </body>
 
