@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Article;
 
 class ArticlesController extends AbstractController
@@ -52,6 +54,39 @@ class ArticlesController extends AbstractController
     {
         return $this->render('articles/article-video.html.twig', [
             'controller_name' => 'Article vidéo',
+        ]);
+    }
+
+    /**
+     * @Route("/getArticlesPop", name="getArticlesPop")
+     */
+    public function getArticlesPop(Request $request)
+    {
+        //IF AJAX GET ARTICLE POP
+        if($request->isXmlHttpRequest()){
+            $articlesPop = $this->getDoctrine()
+                         ->getRepository(Article::class)
+                         ->createQueryBuilder('a')
+                         ->orderBy('a.vue', 'DESC')
+                         ->setMaxResults(6)
+                         ->getQuery()
+                         ->execute();
+
+             $arrayArticles = array();
+             foreach ($articlesPop as $key => $value) {
+                 $id = $value->getId();
+                 $title = $value->getTitle();
+                 $createdAt = $value->getCreatedAt()->format('d/m/Y');;
+                 $publicThumb = $value->getPublicThumb();
+                 $arrayArticles[] = array('id' => $id, 'title'=>$title, 'createdAt'=>$createdAt, 'publicThumb' => $publicThumb);
+             }
+
+            $response = new JsonResponse($arrayArticles);
+            return $response;
+        }
+
+        return $this->render('main/error_404.html.twig', [
+            'controller_name' => 'Page introuvable',
         ]);
     }
 }

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block body %}
+<!-- s-content
+================================================== -->
+<section class="s-content s-content--top-padding">
+
+    <div class="row narrow">
+        <div class="col-full s-content__header" data-aos="fade-up">
+            <h1 class="display-1 display-1--with-line-sep">Mot(s) recherché(s): {{app.request.get('_route_params')['word']}}</h1>
+            {% if articles is not defined %}
+              <p class="lead">Aucun résultat pour votre recherche !</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row entries-wrap add-top-padding wide">
+        <div class="entries">
+
+          {% if articles is defined %}
+            {% for article in articles %}
+              <article class="col-block">
+
+                  <div class="item-entry" data-aos="zoom-in">
+                      <div class="item-entry__thumb">
+                          <a href="{{ path('article-standard', {'id' : article.id}) }}" class="item-entry__thumb-link">
+                              <img src="{{ asset(article.publicThumb) | imagine_filter('cat_thumb') }}"
+                                   alt="">
+                          </a>
+                      </div>
+
+                      <div class="item-entry__text">
+                          <div class="item-entry__cat">
+                              <a href="{{ path('category', {'id' : article.category.id}) }}">{{article.category.name}}</a>
+                          </div>
+
+                          <h1 class="item-entry__title"><a href="{{ path('article-standard', {'id' : article.id}) }}">{{article.title}}</a></h1>
+
+                          <div class="item-entry__date">
+                              <a href="{{ path('article-standard', {'id' : article.id}) }}">{{article.createdAt | date('d/m/Y')}}</a>
+                          </div>
+                      </div>
+                  </div>
+
+              </article>
+            {% endfor %}
+          {% endif %}
+
+        </div> <!-- end entries -->
+    </div> <!-- end entries-wrap -->
+
+    <!-- PAGINATION HERE -->
+
+</section> <!-- end s-content -->
+{% endblock %}

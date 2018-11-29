@@ -9,17 +9,15 @@
 
     <div class="row narrow">
         <div class="col-full s-content__header">
-            <h1 class="display-1 display-1--with-line-sep">Contact Us.</h1>
+            <h1 class="display-1 display-1--with-line-sep">Contactez-nous.</h1>
             <p class="lead">
-            Duis ex ad cupidatat tempor Excepteur cillum cupidatat fugiat nostrud cupidatat dolor
-            sunt sint sit nisi est eu exercitation incididunt adipisicing veniam velit id fugiat enim
-            mollit amet anim veniam dolor dolor irure velit commodo.</p>
+            Ci-dessous vous aurez accès à toutes les possibilités de nous contacter. N'hésitez pas à utiliser le formulaire de contact pour tout renseignement, suggestion ou autres...</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-full s-content__main">
-            <p>
+            <!-- <p>
             <img src="{{ asset('assets/img/thumbs/contact/contact-1000.jpg') }}"
                  srcset="{{ asset('assets/img/thumbs/contact/contact-2000.jpg 2000w') }},
                          {{ asset('assets/img/thumbs/contact/contact-1000.jpg 1000w') }},
@@ -39,7 +37,7 @@
             sunt sint sit nisi est eu exercitation incididunt adipisicing veniam velit id fugiat enim
             mollit amet anim veniam dolor dolor irure velit commodo cillum sit nulla ullamco. Lorem
             ipsum Nisi amet fugiat eiusmod et aliqua ad qui ut nisi Ut aute anim mollit fugiat aute.
-            </p>
+            </p> -->
 
             <div id="map-wrap">
                 <div id="map-container"></div>
@@ -48,8 +46,8 @@
             </div>
 
             <div class="row">
-                <div class="col-six tab-full">
-                    <h4>Where to Find Us</h4>
+                <!-- <div class="col-six tab-full">
+                    <h4>Où nous trouver</h4>
 
                     <p>
                     1600 Amphitheatre Parkway<br>
@@ -57,47 +55,363 @@
                     94043 US
                     </p>
 
-                </div>
+                </div> -->
 
                 <div class="col-six tab-full">
-                    <h4>Contact Info</h4>
+                    <h4>Informations de contact</h4>
 
-                    <p>sayhello@wordsmith.com<br>
-                    info@wordsmith.com <br>
-                    Phone: (+1) 123 456
+                    <p>gregory@cascales.fr<br>
+                    <!-- info@wordsmith.com <br> -->
+                    Téléphone: (+33) 06 16 99 66 75
                     </p>
 
                 </div>
             </div>
 
-            <h4>Get In Touch</h4>
+            <h4>Nous contacter en quelques cliques</h4>
 
-            <form name="cForm" id="cForm" class="contact-form" method="post" action="">
+            <div name="cForm" id="cForm" class="contact-form">
+                <label for="mc-email" id="contactmessage" class="subscribe-message"></label>
                 <fieldset>
 
                     <div>
-                        <input name="cName" id="cName" class="full-width" placeholder="Your Name*" value="" type="text">
+                        <input name="cName" id="cName" class="full-width" placeholder="Votre nom*" value="" type="text">
                     </div>
 
                     <div class="form-field">
-                        <input name="cEmail" id="cEmail" class="full-width" placeholder="Your Email*" value="" type="text">
+                        <input name="cEmail" id="cEmail" class="full-width" placeholder="Votre email*" value="" type="text">
                     </div>
 
                     <div class="form-field">
-                        <input name="cWebsite" id="cWebsite" class="full-width" placeholder="Website" value="" type="text">
+                        <input name="cWebsite" id="cWebsite" class="full-width" placeholder="Votre site web / société" value="" type="text">
                     </div>
 
                     <div class="message form-field">
-                    <textarea name="cMessage" id="cMessage" class="full-width" placeholder="Your Message*"></textarea>
+                    <textarea name="cMessage" id="cMessage" class="full-width" placeholder="Votre message*"></textarea>
                     </div>
 
-                    <button type="submit" class="submit btn btn--primary btn--large full-width">Send Message</button>
+                    <button type="submit" class="submit btn btn--primary btn--large full-width">Envoyer le message</button>
 
                 </fieldset>
-            </form>
+            </div>
 
         </div> <!-- s-content__main -->
     </div> <!-- end row -->
 
 </section> <!-- end s-content -->
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzHLqLju-cIsAzlyTbYujt8-Xhq6MN1Fc&callback=initMap"
+ type="text/javascript"></script>
+
+</script>
+<script type="text/javascript">
+/* SEND CONTACT
+* ------------------------------------------------------ */
+$(".submit.btn").click(function(){
+  var name = $('#cName').val();
+  var email = $('#cEmail').val();
+  var societe = $('#cWebsite').val();
+  var message = $('#cMessage').val();
+  if(name.length != 0 && email.length != 0 && message.length != 0){
+    // IF SOCIETE NULL
+    if(societe.length == ''){
+      societe = 'Aucun site web - société renseigné(e).';
+    }
+    // IF CARACTERES SPECIAUX
+    name = name.replace( "/", ' - ' );
+    societe = societe.replace( "/", ' - ' );
+    message = message.replace( "/", ' - ' );
+    //SEND AJAX
+    urlAj = "{{ path('contact-send', {'name' : "thisname", 'email' : 'thisemail', 'message' : 'thismessage', 'societe' : 'thissociete'}) }}";
+    urlAj = urlAj.replace( "thisname", name );
+    urlAj = urlAj.replace( "thisemail", email );
+    urlAj = urlAj.replace( "thismessage", message );
+    urlAj = urlAj.replace( "thissociete", societe );
+    $.ajax({
+        async: true,
+        type: 'POST',
+        url : urlAj,
+        success: function (data) {
+          if(data == '1'){
+            $('#contactmessage').html('Votre message a été envoyé avec succès !');
+          } else {
+            $('#contactmessage').html(data);
+          }
+        },
+        error: function (){
+          $('#contactmessage').html('Problème lors de l\'inscription, si le problème persiste réessayez ultérieurement !');
+        },
+    });
+  } else {
+    $('#contactmessage').html('Le nom, email et message sont obligatoire !');
+  }
+})
+
+
+/* Map
+* ------------------------------------------------------ */
+
+// add custom buttons for the zoom-in/zoom-out on the map
+var clCustomZoomControl = function(controlDiv, map) {
+
+    // grap the zoom elements from the DOM and insert them in the map
+    var controlUIzoomIn= document.getElementById('map-zoom-in'),
+            controlUIzoomOut= document.getElementById('map-zoom-out');
+
+    controlDiv.appendChild(controlUIzoomIn);
+    controlDiv.appendChild(controlUIzoomOut);
+
+    // Setup the click event listeners and zoom-in or out according to the clicked element
+    google.maps.event.addDomListener(controlUIzoomIn, 'click', function() {
+        map.setZoom(map.getZoom()+1)
+    });
+    google.maps.event.addDomListener(controlUIzoomOut, 'click', function() {
+        map.setZoom(map.getZoom()-1)
+    });
+
+};
+
+var clGoogleMap = function() {
+
+    if (typeof google === 'object' && typeof google.maps === 'object') {
+        // 37.422424, -122.085661
+
+        var latitude = 42.6592611,
+            longitude = 2.9502991,
+            map_zoom = 14,
+            main_color = '#0054a5',
+            saturation_value = -30,
+            brightness_value = 5,
+            marker_url = null,
+            winWidth = $(window).width();
+
+        // show controls
+        $("#map-zoom-in, #map-zoom-out").show();
+
+        // marker url
+        if ( winWidth > 480 ) {
+            marker_url = '{{ asset('assets/img/icon-location@2x.png') }}';
+        } else {
+            marker_url = '{{ asset('assets/img/icon-location.png') }}';
+        }
+
+        // map style
+        var style = [
+            {
+                // set saturation for the labels on the map
+                elementType: "labels",
+                stylers: [
+                    { saturation: saturation_value }
+                ]
+            },
+            {	// poi stands for point of interest - don't show these lables on the map
+                featureType: "poi",
+                elementType: "labels",
+                stylers: [
+                    {visibility: "off"}
+                ]
+            },
+            {
+                // don't show highways lables on the map
+                featureType: 'road.highway',
+                elementType: 'labels',
+                stylers: [
+                    { visibility: "off" }
+                ]
+            },
+            {
+                // don't show local road lables on the map
+                featureType: "road.local",
+                elementType: "labels.icon",
+                stylers: [
+                    { visibility: "off" }
+                ]
+            },
+            {
+                // don't show arterial road lables on the map
+                featureType: "road.arterial",
+                elementType: "labels.icon",
+                stylers: [
+                    { visibility: "off" }
+                ]
+            },
+            {
+                // don't show road lables on the map
+                featureType: "road",
+                elementType: "geometry.stroke",
+                stylers: [
+                    { visibility: "off" }
+                ]
+            },
+            // style different elements on the map
+            {
+                featureType: "transit",
+                elementType: "geometry.fill",
+                stylers: [
+                    { hue: main_color },
+                    { visibility: "on" },
+                    { lightness: brightness_value },
+                    { saturation: saturation_value }
+                ]
+            },
+            {
+                featureType: "poi",
+                elementType: "geometry.fill",
+                stylers: [
+                    { hue: main_color },
+                    { visibility: "on" },
+                    { lightness: brightness_value },
+                    { saturation: saturation_value }
+                ]
+            },
+            {
+                featureType: "poi.government",
+                elementType: "geometry.fill",
+                stylers: [
+                    { hue: main_color },
+                    { visibility: "on" },
+                    { lightness: brightness_value },
+                    { saturation: saturation_value }
+                ]
+            },
+            {
+                featureType: "poi.sport_complex",
+                elementType: "geometry.fill",
+                stylers: [
+                    { hue: main_color },
+                    { visibility: "on" },
+                    { lightness: brightness_value },
+                    { saturation: saturation_value }
+                ]
+            },
+            {
+                featureType: "poi.attraction",
+                elementType: "geometry.fill",
+                stylers: [
+                    { hue: main_color },
+                    { visibility: "on" },
+                    { lightness: brightness_value },
+                    { saturation: saturation_value }
+                ]
+            },
+            {
+                featureType: "poi.business",
+                elementType: "geometry.fill",
+                stylers: [
+                    { hue: main_color },
+                    { visibility: "on" },
+                    { lightness: brightness_value },
+                    { saturation: saturation_value }
+                ]
+            },
+            {
+                featureType: "transit",
+                elementType: "geometry.fill",
+                stylers: [
+                    { hue: main_color },
+                    { visibility: "on" },
+                    { lightness: brightness_value },
+                    { saturation: saturation_value }
+                ]
+            },
+            {
+                featureType: "transit.station",
+                elementType: "geometry.fill",
+                stylers: [
+                    { hue: main_color },
+                    { visibility: "on" },
+                    { lightness: brightness_value },
+                    { saturation: saturation_value }
+                ]
+            },
+            {
+                featureType: "landscape",
+                stylers: [
+                    { hue: main_color },
+                    { visibility: "on" },
+                    { lightness: brightness_value },
+                    { saturation: saturation_value }
+                ]
+
+            },
+            {
+                featureType: "road",
+                elementType: "geometry.fill",
+                stylers: [
+                    { hue: main_color },
+                    { visibility: "on" },
+                    { lightness: brightness_value },
+                    { saturation: saturation_value }
+                ]
+            },
+            {
+                featureType: "road.highway",
+                elementType: "geometry.fill",
+                stylers: [
+                    { hue: main_color },
+                    { visibility: "on" },
+                    { lightness: brightness_value },
+                    { saturation: saturation_value }
+                ]
+            },
+            {
+                featureType: "water",
+                elementType: "geometry",
+                stylers: [
+                    { hue: main_color },
+                    { visibility: "on" },
+                    { lightness: brightness_value },
+                    { saturation: saturation_value }
+                ]
+            }
+        ];
+
+        // map options
+        var map_options = {
+
+            center: new google.maps.LatLng(latitude, longitude),
+            zoom: 14,
+            panControl: false,
+            zoomControl: false,
+            mapTypeControl: false,
+            streetViewControl: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            scrollwheel: false,
+            styles: style
+
+            };
+
+        // inizialize the map
+        var map = new google.maps.Map(document.getElementById('map-container'), map_options);
+
+        // add a custom marker to the map
+        var marker = new google.maps.Marker({
+
+                position: new google.maps.LatLng(latitude, longitude),
+                map: map,
+                visible: true,
+                icon: marker_url
+
+            });
+
+        var zoomControlDiv = document.createElement('div');
+        var zoomControl = new clCustomZoomControl(zoomControlDiv, map);
+
+        // insert the zoom div on the top right of the map
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomControlDiv);
+
+    }
+
+};
+
+/* Initialize
+ * ------------------------------------------------------ */
+ (function clInit() {
+
+     clGoogleMap();
+
+ })();
+</script>
 {% endblock %}

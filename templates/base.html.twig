@@ -5,7 +5,7 @@
     <!--- basic page needs
     ================================================== -->
     <meta charset="utf-8">
-    <title>{% block title %}{% endblock %}- TitoCode</title>
+    <title>{% block title %}{% endblock %} - TitoCode</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -99,13 +99,13 @@
         <a class="header__search-trigger" href="#0"></a>
         <div class="header__search">
 
-            <form role="search" method="get" class="header__search-form" action="#">
+            <div class="header__search-form">
                 <label>
                     <span class="hide-content">Rechercher :</span>
-                    <input type="search" class="search-field" placeholder="Mots clés" value="" name="s" title="Rechercher :" autocomplete="off">
+                    <input type="search" class="search-field" placeholder="Mots clés" value="" name="word" title="Rechercher :" autocomplete="off">
                 </label>
-                <input type="submit" class="search-submit" value="Rechercher">
-            </form>
+                <!-- <input type="submit" class="search-submit" value="Rechercher"> -->
+            </div>
 
             <a href="#0" title="Fermer la recherche" class="header__overlay-close">Close</a>
 
@@ -124,14 +124,14 @@
 
                     </ul>
                 </li>
-                <li class="has-children">
+                <!-- <li class="has-children">
                     <a href="#0" title="">Les tutoriels</a>
                     <ul class="sub-menu">
                         <li><a href="">Tutoriels écrit</a></li>
-                        <li><a href="{{ path('article-video') }}">Tutoriels vidéo</a></li>
+                        <li><a href="">Tutoriels vidéo</a></li>
                         {# <li><a href="single-standard.html">Standard Post</a></li> #}
                     </ul>
-                </li>
+                </li> -->
                 {# <li><a href="style-guide.html" title="">Styles</a></li> #}
                 <li><a href="{{ path('about') }}" title="">A propos</a></li>
                 <li><a href="{{ path('contact') }}" title="">Contactez-nous</a></li>
@@ -152,70 +152,12 @@
         <div class="row">
 
             <div class="col-seven md-six tab-full popular">
-                <h3>Popular Posts</h3>
+                <h3>Articles populaire</h3>
 
-                <div class="block-1-2 block-m-full popular__posts">
-                    <article class="col-block popular__post">
-                        <a href="#0" class="popular__thumb">
-                            <img src="{{asset('assets/img/thumbs/small/tulips-150.jpg')}}" alt="">
-                        </a>
-                        <h5>10 Interesting Facts About Caffeine.</h5>
-                        <section class="popular__meta">
-                            <span class="popular__author"><span>By</span> <a href="#0">John Doe</a></span>
-                            <span class="popular__date"><span>on</span> <time datetime="2018-06-14">Jun 14, 2018</time></span>
-                        </section>
-                    </article>
-                    <article class="col-block popular__post">
-                        <a href="#0" class="popular__thumb">
-                            <img src="{{asset('assets/img/thumbs/small/wheel-150.jpg')}}" alt="">
-                        </a>
-                        <h5><a href="#0">Visiting Theme Parks Improves Your Health.</a></h5>
-                        <section class="popular__meta">
-                            <span class="popular__author"><span>By</span> <a href="#0">John Doe</a></span>
-                            <span class="popular__date"><span>on</span> <time datetime="2018-06-12">Jun 12, 2018</time></span>
-                        </section>
-                    </article>
-                    <article class="col-block popular__post">
-                        <a href="#0" class="popular__thumb">
-                            <img src="{{asset('assets/img/thumbs/small/shutterbug-150.jpg')}}" alt="">
-                        </a>
-                        <h5><a href="#0">Key Benefits Of Family Photography.</a></h5>
-                        <section class="popular__meta">
-                            <span class="popular__author"><span>By</span> <a href="#0">John Doe</a></span>
-                            <span class="popular__date"><span>on</span> <time datetime="2018-06-12">Jun 12, 2018</time></span>
-                        </section>
-                    </article>
-                    <article class="col-block popular__post">
-                        <a href="#0" class="popular__thumb">
-                            <img src="{{asset('assets/img/thumbs/small/cookies-150.jpg')}}" alt="">
-                        </a>
-                        <h5><a href="#0">Absolutely No Sugar Oatmeal Cookies.</a></h5>
-                        <section class="popular__meta">
-                            <span class="popular__author"><span>By</span> <a href="#0"> John Doe</a></span>
-                            <span class="popular__date"><span>on</span> <time datetime="2018-06-12">Jun 12, 2018</time></span>
-                        </section>
-                    </article>
-                    <article class="col-block popular__post">
-                        <a href="#0" class="popular__thumb">
-                            <img src="{{asset('assets/img/thumbs/small/beetle-150.jpg')}}" alt="">
-                        </a>
-                        <h5><a href="#0">Throwback To The Good Old Days.</a></h5>
-                        <section class="popular__meta">
-                            <span class="popular__author"><span>By</span> <a href="#0">John Doe</a></span>
-                            <span class="popular__date"><span>on</span> <time datetime="2018-06-12">Jun 12, 2018</time></span>
-                        </section>
-                    </article>
-                    <article class="col-block popular__post">
-                        <a href="#0" class="popular__thumb">
-                            <img src="{{asset('assets/img/thumbs/small/salad-150.jpg')}}" alt="">
-                        </a>
-                        <h5>Healthy Mediterranean Salad Recipes</h5>
-                        <section class="popular__meta">
-                            <span class="popular__author"><span>By</span> <a href="#0"> John Doe</a></span>
-                            <span class="popular__date"><span>on</span> <time datetime="2018-06-12">Jun 12, 2018</time></span>
-                        </section>
-                    </article>
-                </div> <!-- end popular_posts -->
+                <div class="block-1-2 block-m-full popular__posts popularPost">
+
+
+                </div>
             </div> <!-- end popular -->
 
             <div class="col-four md-six tab-full end">
@@ -256,31 +198,29 @@
 
                 <div class="col-six tab-full s-footer__about">
 
-                    <h4>About Wordsmith</h4>
+                    <h4>À propos de Titocode</h4>
 
-                    <p>Fugiat quas eveniet voluptatem natus. Placeat error temporibus magnam sunt optio aliquam. Ut ut occaecati placeat at.
-                    Fuga fugit ea autem. Dignissimos voluptate repellat occaecati minima dignissimos mollitia consequatur.
-                    Sit vel delectus amet officiis repudiandae est voluptatem. Tempora maxime provident nisi et fuga et enim exercitationem ipsam. Culpa error
-                    temporibus magnam est voluptatem.</p>
+                    <p>Titocode est un blog réunissant toutes sortes de tutoriels liés au développement web et applicatif. Fondé en fin 2018 par <a href="https://www.cascales.fr/">Grégory Cascales</a>, le but de ce site est de partager notre savoir à des développeurs débutants, amateurs ou même expérimentés.
+                    Notre diversité dans les languages de programmation permettra ainsi d'élargir, au fil du temps, les catégories de nos tutoriels.</p>
 
                 </div> <!-- end s-footer__about -->
 
                 <div class="col-six tab-full s-footer__subscribe">
 
-                    <h4>Our Newsletter</h4>
+                    <h4>Notre Newsletter</h4>
 
-                    <p>Sit vel delectus amet officiis repudiandae est voluptatem. Tempora maxime provident nisi et fuga et enim exercitationem ipsam. Culpa consequatur occaecati.</p>
+                    <p>Aucun spam ni de mails inutile, vous serez juste averti pour chaque nouveauté en lien avec Titocode, on vous le promet !</p>
 
                     <div class="subscribe-form">
-                        <form id="mc-form" class="group" novalidate="true">
+                        <div id="mc-form" class="group" novalidate="true">
 
-                            <input type="email" value="" name="EMAIL" class="email" id="mc-email" placeholder="Email Address" required="">
+                            <input type="email" value="" name="emailNewsletters" class="email emailNewsletters" id="mc-email" placeholder="Adresse email" required="">
 
-                            <input type="submit" name="subscribe" value="Send">
+                            <input type="submit" class="subNewsletters" name="subNewsletters" value="S'inscrire">
 
-                            <label for="mc-email" class="subscribe-message"></label>
+                            <label for="mc-email" id="submessage" class="subscribe-message"></label>
 
-                        </form>
+                        </div>
                     </div>
 
                 </div> <!-- end s-footer__subscribe -->
@@ -293,21 +233,21 @@
 
                 <div class="col-six">
                     <ul class="footer-social">
-                        <li>
+                        <!-- <li>
                             <a href="#0"><i class="fab fa-facebook"></i></a>
+                        </li> -->
+                        <li>
+                            <a href="https://twitter.com/grasgouz/"><i class="fab fa-twitter"></i></a>
                         </li>
                         <li>
-                            <a href="#0"><i class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com/gzcls"><i class="fab fa-instagram"></i></a>
                         </li>
-                        <li>
-                            <a href="#0"><i class="fab fa-instagram"></i></a>
-                        </li>
-                        <li>
+                        <!-- <li>
                             <a href="#0"><i class="fab fa-youtube"></i></a>
                         </li>
                         <li>
                             <a href="#0"><i class="fab fa-pinterest"></i></a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
 
@@ -336,16 +276,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
     <script src="{{asset('assets/Semantic-UI/semantic.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins.js')}}"></script>
     <script src="{{asset('assets/js/main.js')}}"></script>
-    {% block javascripts %}
     <script>
         $(document).ready(function(){
-            //ajax for cart
+            //ajax for catégories
             $.ajax({
                 async: true,
                 type: 'POST',
                 url: "{{ path('getCategorys') }}",
                 success: function (data) {
-                    console.log(data);
                     $.each(data, function(i, v) {
                         var url = '{{ path("category", {"id": "region_id"}) }}';
                         url = url.replace("region_id", v.id);
@@ -355,8 +293,97 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
                     })
                 },
             });
+
+            //ajax for articlesPop
+            $.ajax({
+                async: true,
+                type: 'POST',
+                url: "{{ path('getArticlesPop') }}",
+                success: function (data) {
+                    $.each(data, function(i, v) {
+                        var url = '{{ path("article-standard", {"id": "region_id"}) }}';
+                        url = url.replace("region_id", v.id);
+                        resultHTML = '<article class="col-block popular__post"><a href="'+url+'" class="popular__thumb"><img src="{{asset("publicThumb") | imagine_filter('mini_thumb') }}" alt=""></a><h5>'+v.title+'</h5><section class="popular__meta"><span class="popular__author"><span>Par</span> <a href="https://www.cascales.fr/">Grégory Cascales</a></span> <span class="popular__date"><span>le</span> <time datetime="'+v.createdAt+'">'+v.createdAt+'</time></span></section></article>';
+                        resultHTML = resultHTML.replace("publicThumb", v.publicThumb);
+                        $('.popularPost').append(resultHTML);
+                    })
+                },
+            });
+
+            /* Newsletter
+             * ------------------------------------------------------ */
+             var clAjaxChimp = function() {
+
+               function isEmail(email) {
+                  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                  return regex.test(email);
+                }
+
+               $(".subNewsletters").click(function(){
+                 var error = null;
+                 //ERRORS
+                 if($(".emailNewsletters").val() == '' || !isEmail($(".emailNewsletters").val())){
+                   error = "Un email valide est obligatoire !";
+                 }
+                 if(error == null){
+                     $('#submessage').html("Traitement...");
+                     urlAj = "{{ path('newsletter', {'email' : "region_email"}) }}";
+                     urlAj = urlAj.replace( "region_email", $(".emailNewsletters").val() );
+                     $.ajax({
+                         async: true,
+                         type: 'POST',
+                         url : urlAj,
+                         success: function (data) {
+                           if(data != 1){
+                             if(data == "Email déjà utilisé !"){
+                                $('#submessage').html(data);
+                             } else {
+                                $('#submessage').html('Problème lors de l\'inscription, si le problème persiste réessayez ultérieurement !');
+                             }
+                           } else {
+                             $('#submessage').html('Un email de confirmation vous à été envoyé !');
+                           }
+                         },
+                         error: function (){
+                           $('#submessage').html('Problème lors de l\'inscription, si le problème persiste réessayez ultérieurement !');
+                         },
+                     });
+                 } else {
+                   $('#submessage').html(error);
+                 }
+               })
+
+                 var errors = {
+                     'submit': 'Traitement...',
+                     0: '<i class="fas fa-check"></i> Nous vous avons envoyé un email de confimation !',
+                     1: '<i class="fas fa-exclamation-circle"></i> Une adresse email est obligatoire pour s\'inscrire aux newsletters.',
+                     2: '<i class="fas fa-exclamation-circle"></i> Votre email n\'est pas valide.',
+                     3: '<i class="fas fa-exclamation-circle"></i> Votre email n\'est pas valide.',
+                     4: '<i class="fas fa-exclamation-circle"></i> Votre email n\'est pas valide.',
+                     5: '<i class="fas fa-exclamation-circle"></i> Votre email n\'est pas valide.'
+                 }
+             };
+
+             (function clInit() {
+                 clAjaxChimp();
+             })();
+
+             //SEARCH SEND
+             $('.search-field').keypress(function (e) {
+               var key = e.which;
+               if(key == 13)  // the enter key code
+                {
+                  var url = '{{ path("rechercher", {"word": "region_word"}) }}';
+                  url = url.replace("region_word", $(this).val());
+                  $(location).attr('href', url)
+                  return false;
+                }
+              });
+
         });
     </script>
+
+    {% block javascripts %}
     {% endblock %}
 
 </body>

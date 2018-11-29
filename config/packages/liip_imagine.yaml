@@ -75,3 +75,30 @@ liip_imagine:
                     size:     [1000, 500]
                     position: center
                     color:    '#F2F2F2'
+
+        mini_thumb:
+#
+#            # set your image quality defaults
+            jpeg_quality:          85
+            png_compression_level: 8
+#
+#            # setup the filter steps to apply for this transformation
+            filters:
+#
+#                # auto rotate the image using EXIF metadata
+                auto_rotate: ~
+#
+#                # strip the image of all metadata
+                strip: ~
+#
+#                # scale and square the image to the given dimensions
+                thumbnail:
+                    size:          [150, 150]
+                    mode:          outbound
+#                    allow_upscale: true
+#
+#                # create border by placing image on larger black background
+                background:
+                    size:     [150, 150]
+                    position: center
+                    color:    '#F2F2F2'

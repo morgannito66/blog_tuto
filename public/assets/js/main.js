@@ -6,7 +6,7 @@
 (function($) {
 
     "use strict";
-    
+
     var cfg = {
         scrollDuration : 800, // smoothscroll duration
         mailChimpURL   : 'https://facebook.us8.list-manage.com/subscribe/post?u=cdb7b577e41181934ed6a6a44&amp;id=e6957d85dc'   // mailchimp url
@@ -23,7 +23,7 @@
    /* Preloader
     * -------------------------------------------------- */
     var clPreloader = function() {
-        
+
         $("html").addClass('ss-preload');
 
         $WIN.on('load', function() {
@@ -31,18 +31,18 @@
             //force page scroll position to top at page refresh
             // $('html, body').animate({ scrollTop: 0 }, 'normal');
 
-            // will first fade out the loading animation 
+            // will first fade out the loading animation
             $("#loader").fadeOut("slow", function() {
                 // will fade out the whole DIV that covers the website.
                 $("#preloader").delay(300).fadeOut("slow");
-            }); 
-       
+            });
+
         });
     };
 
 
    /* pretty print
-    * -------------------------------------------------- */ 
+    * -------------------------------------------------- */
     var clPrettyPrint = function() {
         $('pre').addClass('prettyprint');
         $( document ).ready(function() {
@@ -54,7 +54,7 @@
    /* search
     * ------------------------------------------------------ */
     var clSearch = function() {
-            
+
         var searchWrap = $('.header__search'),
             searchField = searchWrap.find('.search-field'),
             closeSearch = searchWrap.find('.header__overlay-close'),
@@ -63,25 +63,25 @@
 
 
         searchTrigger.on('click', function(e) {
-            
+
             e.preventDefault();
             e.stopPropagation();
-        
+
             var $this = $(this);
-        
+
             siteBody.addClass('search-is-visible');
             setTimeout(function(){
                 searchWrap.find('.search-field').focus();
             }, 100);
-        
+
         });
 
         closeSearch.on('click', function(e) {
 
             var $this = $(this);
-        
-            e.stopPropagation(); 
-        
+
+            e.stopPropagation();
+
             if(siteBody.hasClass('search-is-visible')){
                 siteBody.removeClass('search-is-visible');
                 setTimeout(function(){
@@ -95,25 +95,25 @@
                 closeSearch.trigger('click');
             }
         });
-            
+
         searchField.on('click', function(e){
             e.stopPropagation();
         });
-            
+
         searchField.attr({placeholder: 'Mots clés', autocomplete: 'off'});
 
     };
 
 
    /* Mobile Menu
-    * ---------------------------------------------------- */ 
+    * ---------------------------------------------------- */
    var clMobileMenu = function() {
 
         var navWrap = $('.header__nav-wrap'),
             closeNavWrap = navWrap.find('.header__overlay-close'),
             menuToggle = $('.header__toggle-menu'),
             siteBody = $('body');
-        
+
         menuToggle.on('click', function(e) {
             var $this = $(this);
 
@@ -123,18 +123,18 @@
         });
 
         closeNavWrap.on('click', function(e) {
-            
+
             var $this = $(this);
-            
+
             e.preventDefault();
             e.stopPropagation();
-        
+
             if(siteBody.hasClass('nav-wrap-is-visible')) {
                 siteBody.removeClass('nav-wrap-is-visible');
             }
         });
 
-        // open (or close) submenu items in mobile view menu. 
+        // open (or close) submenu items in mobile view menu.
         // close all the other open submenu items.
         $('.header__nav .has-children').children('a').on('click', function (e) {
             e.preventDefault();
@@ -160,7 +160,7 @@
    /* slick slider
     * ------------------------------------------------------ */
     var clSlickSlider = function() {
-        
+
         $('.featured-slider').slick({
             arrows: true,
             dots: true,
@@ -201,11 +201,11 @@
    /* Smooth Scrolling
     * ------------------------------------------------------ */
     var clSmoothScroll = function() {
-        
+
         $('.smoothscroll').on('click', function (e) {
             var target = this.hash,
             $target    = $(target);
-            
+
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -231,7 +231,7 @@
 
         $('.alert-box').on('click', '.alert-box__close', function() {
             $(this).parent().fadeOut(500);
-        }); 
+        });
 
     };
 
@@ -239,7 +239,7 @@
    /* Animate On Scroll
     * ------------------------------------------------------ */
     var clAOS = function() {
-        
+
         AOS.init( {
             offset: 200,
             duration: 600,
@@ -252,43 +252,52 @@
     };
 
 
-   /* AjaxChimp
-    * ------------------------------------------------------ */
-    var clAjaxChimp = function() {
-        
-        $('#mc-form').ajaxChimp({
-            language: 'es',
-            url: cfg.mailChimpURL
-        });
-
-        // Mailchimp translation
-        //
-        //  Defaults:
-        //	 'submit': 'Submitting...',
-        //  0: 'We have sent you a confirmation email',
-        //  1: 'Please enter a value',
-        //  2: 'An email address must contain a single @',
-        //  3: 'The domain portion of the email address is invalid (the portion after the @: )',
-        //  4: 'The username portion of the email address is invalid (the portion before the @: )',
-        //  5: 'This email address looks fake or invalid. Please enter a real email address'
-
-        $.ajaxChimp.translations.es = {
-            'submit': 'Submitting...',
-            0: '<i class="fas fa-check"></i> We have sent you a confirmation email',
-            1: '<i class="fas fa-exclamation-circle"></i> You must enter a valid e-mail address.',
-            2: '<i class="fas fa-exclamation-circle"></i> E-mail address is not valid.',
-            3: '<i class="fas fa-exclamation-circle"></i> E-mail address is not valid.',
-            4: '<i class="fas fa-exclamation-circle"></i> E-mail address is not valid.',
-            5: '<i class="fas fa-exclamation-circle"></i> E-mail address is not valid.'
-        } 
-
-    };
+   // /* AjaxChimp
+   //  * ------------------------------------------------------ */
+   //  var clAjaxChimp = function() {
+   //
+   //      $('#mc-form').ajaxChimp({
+   //          language: 'fr',
+   //          url: cfg.mailChimpURL,
+   //          callback: callbackFunction
+   //      });
+   //
+   //      function callbackFunction (resp) {
+   //          if (resp.result === 'success') {
+   //              console.log('oui');
+   //          } else {
+   //            console.log('non');
+   //          }
+   //      }
+   //
+   //      // Mailchimp translation
+   //      //
+   //      //  Defaults:
+   //      //	 'submit': 'Submitting...',
+   //      //  0: 'We have sent you a confirmation email',
+   //      //  1: 'Please enter a value',
+   //      //  2: 'An email address must contain a single @',
+   //      //  3: 'The domain portion of the email address is invalid (the portion after the @: )',
+   //      //  4: 'The username portion of the email address is invalid (the portion before the @: )',
+   //      //  5: 'This email address looks fake or invalid. Please enter a real email address'
+   //
+   //      $.ajaxChimp.translations.fr = {
+   //          'submit': 'Traitement...',
+   //          0: '<i class="fas fa-check"></i> Nous vous avons envoyé un email de confimation !',
+   //          1: '<i class="fas fa-exclamation-circle"></i> Une adresse email est obligatoire pour s\'inscrire aux newsletters.',
+   //          2: '<i class="fas fa-exclamation-circle"></i> Votre email n\'est pas valide.',
+   //          3: '<i class="fas fa-exclamation-circle"></i> Votre email n\'est pas valide.',
+   //          4: '<i class="fas fa-exclamation-circle"></i> Votre email n\'est pas valide.',
+   //          5: '<i class="fas fa-exclamation-circle"></i> Votre email n\'est pas valide.'
+   //      }
+   //
+   //  };
 
 
    /* Back to Top
     * ------------------------------------------------------ */
     var clBackToTop = function() {
-        
+
         var pxShow      = 500,
             goTopButton = $(".go-top")
 
@@ -310,8 +319,8 @@
 
     // add custom buttons for the zoom-in/zoom-out on the map
     var clCustomZoomControl = function(controlDiv, map) {
-            
-        // grap the zoom elements from the DOM and insert them in the map 
+
+        // grap the zoom elements from the DOM and insert them in the map
         var controlUIzoomIn= document.getElementById('map-zoom-in'),
                 controlUIzoomOut= document.getElementById('map-zoom-out');
 
@@ -325,10 +334,10 @@
         google.maps.event.addDomListener(controlUIzoomOut, 'click', function() {
             map.setZoom(map.getZoom()-1)
         });
-            
+
     };
 
-	var clGoogleMap = function() { 
+	var clGoogleMap = function() {
 
         if (typeof google === 'object' && typeof google.maps === 'object') {
 
@@ -354,15 +363,15 @@
             }
 
             // map style
-            var style = [ 
+            var style = [
                 {
                     // set saturation for the labels on the map
                     elementType: "labels",
                     stylers: [
                         { saturation: saturation_value }
                     ]
-                },  
-                {	// poi stands for point of interest - don't show these lables on the map 
+                },
+                {	// poi stands for point of interest - don't show these lables on the map
                     featureType: "poi",
                     elementType: "labels",
                     stylers: [
@@ -376,22 +385,22 @@
                     stylers: [
                         { visibility: "off" }
                     ]
-                }, 
-                { 	
+                },
+                {
                     // don't show local road lables on the map
                     featureType: "road.local",
                     elementType: "labels.icon",
                     stylers: [
-                        { visibility: "off" } 
-                    ] 
+                        { visibility: "off" }
+                    ]
                 },
-                { 
+                {
                     // don't show arterial road lables on the map
                     featureType: "road.arterial",
                     elementType: "labels.icon",
                     stylers: [
                         { visibility: "off" }
-                    ] 
+                    ]
                 },
                 {
                     // don't show road lables on the map
@@ -400,25 +409,25 @@
                     stylers: [
                         { visibility: "off" }
                     ]
-                }, 
+                },
                 // style different elements on the map
-                { 
-                    featureType: "transit", 
-                    elementType: "geometry.fill", 
+                {
+                    featureType: "transit",
+                    elementType: "geometry.fill",
                     stylers: [
                         { hue: main_color },
-                        { visibility: "on" }, 
-                        { lightness: brightness_value }, 
+                        { visibility: "on" },
+                        { lightness: brightness_value },
                         { saturation: saturation_value }
                     ]
-                }, 
+                },
                 {
                     featureType: "poi",
                     elementType: "geometry.fill",
                     stylers: [
                         { hue: main_color },
-                        { visibility: "on" }, 
-                        { lightness: brightness_value }, 
+                        { visibility: "on" },
+                        { lightness: brightness_value },
                         { saturation: saturation_value }
                     ]
                 },
@@ -427,8 +436,8 @@
                     elementType: "geometry.fill",
                     stylers: [
                         { hue: main_color },
-                        { visibility: "on" }, 
-                        { lightness: brightness_value }, 
+                        { visibility: "on" },
+                        { lightness: brightness_value },
                         { saturation: saturation_value }
                     ]
                 },
@@ -437,8 +446,8 @@
                     elementType: "geometry.fill",
                     stylers: [
                         { hue: main_color },
-                        { visibility: "on" }, 
-                        { lightness: brightness_value }, 
+                        { visibility: "on" },
+                        { lightness: brightness_value },
                         { saturation: saturation_value }
                     ]
                 },
@@ -447,8 +456,8 @@
                     elementType: "geometry.fill",
                     stylers: [
                         { hue: main_color },
-                        { visibility: "on" }, 
-                        { lightness: brightness_value }, 
+                        { visibility: "on" },
+                        { lightness: brightness_value },
                         { saturation: saturation_value }
                     ]
                 },
@@ -457,8 +466,8 @@
                     elementType: "geometry.fill",
                     stylers: [
                         { hue: main_color },
-                        { visibility: "on" }, 
-                        { lightness: brightness_value }, 
+                        { visibility: "on" },
+                        { lightness: brightness_value },
                         { saturation: saturation_value }
                     ]
                 },
@@ -467,8 +476,8 @@
                     elementType: "geometry.fill",
                     stylers: [
                         { hue: main_color },
-                        { visibility: "on" }, 
-                        { lightness: brightness_value }, 
+                        { visibility: "on" },
+                        { lightness: brightness_value },
                         { saturation: saturation_value }
                     ]
                 },
@@ -477,8 +486,8 @@
                     elementType: "geometry.fill",
                     stylers: [
                         { hue: main_color },
-                        { visibility: "on" }, 
-                        { lightness: brightness_value }, 
+                        { visibility: "on" },
+                        { lightness: brightness_value },
                         { saturation: saturation_value }
                     ]
                 },
@@ -486,19 +495,19 @@
                     featureType: "landscape",
                     stylers: [
                         { hue: main_color },
-                        { visibility: "on" }, 
-                        { lightness: brightness_value }, 
+                        { visibility: "on" },
+                        { lightness: brightness_value },
                         { saturation: saturation_value }
                     ]
-                    
+
                 },
                 {
                     featureType: "road",
                     elementType: "geometry.fill",
                     stylers: [
                         { hue: main_color },
-                        { visibility: "on" }, 
-                        { lightness: brightness_value }, 
+                        { visibility: "on" },
+                        { lightness: brightness_value },
                         { saturation: saturation_value }
                     ]
                 },
@@ -507,23 +516,23 @@
                     elementType: "geometry.fill",
                     stylers: [
                         { hue: main_color },
-                        { visibility: "on" }, 
-                        { lightness: brightness_value }, 
+                        { visibility: "on" },
+                        { lightness: brightness_value },
                         { saturation: saturation_value }
                     ]
-                }, 
+                },
                 {
                     featureType: "water",
                     elementType: "geometry",
                     stylers: [
                         { hue: main_color },
-                        { visibility: "on" }, 
-                        { lightness: brightness_value }, 
+                        { visibility: "on" },
+                        { lightness: brightness_value },
                         { saturation: saturation_value }
                     ]
                 }
             ];
-                
+
             // map options
             var map_options = {
 
@@ -549,16 +558,16 @@
                     map: map,
                     visible: true,
                     icon: marker_url
-                    
+
                 });
-            
+
             var zoomControlDiv = document.createElement('div');
             var zoomControl = new clCustomZoomControl(zoomControlDiv, map);
 
             // insert the zoom div on the top right of the map
             map.controls[google.maps.ControlPosition.TOP_RIGHT].push(zoomControlDiv);
 
-        } 
+        }
 
     };
 
@@ -575,9 +584,9 @@
         clSmoothScroll();
         clAlertBoxes();
         clAOS();
-        clAjaxChimp();
+        // clAjaxChimp();
         clBackToTop();
-        clGoogleMap();
+        // clGoogleMap();
 
     })();
 
