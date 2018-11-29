@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<section class="s-content s-content--top-padding s-content--narrow">
+
+    <div class="row narrow">
+        <div class="col-full s-content__header">
+            <h1 class="display-1 display-1--with-line-sep">Connectez-vous.</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-full s-content__main">
+            <form name="cForm" id="cForm" class="contact-form" action="{{ path('security_login') }}" method="post">
+
+                {% if error %}
+                <label for="mc-email" id="contactmessage" class="subscribe-message">{{ error.messageKey }}</label>
+                {% endif %}
+
+                <fieldset>
+                    <div>
+                        <input name="_username" value="{{ last_username }}" class="full-width" placeholder="Votre username*" type="text">
+                    </div>
+                    <div class="form-field">
+                        <input name="_password" class="full-width" placeholder="Votre mot de passe*" type="password">
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                    <button type="submit" class="submit btn btn--primary btn--large full-width">Se connecter</button>
+                </fieldset>
+
+            </form>
+        </div> <!-- s-content__main -->
+    </div> <!-- end row -->
+
+</section>
+{% endblock %}

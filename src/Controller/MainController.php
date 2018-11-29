@@ -22,9 +22,9 @@ class MainController extends AbstractController
     {
         //3ARTICLES MAINS PAGES
         $repoArticle = $this->getDoctrine()->getRepository(Article::class);
-        $mainArticle1 = $repoArticle->find(2);
-        $mainArticle2 = $repoArticle->find(3);
-        $mainArticle3 = $repoArticle->find(4);
+        $mainArticle1 = $repoArticle->find(8);
+        $mainArticle2 = $repoArticle->find(9);
+        $mainArticle3 = $repoArticle->find(10);
 
         //ARTICLES
         $query = $manager->createQuery(
@@ -45,6 +45,14 @@ class MainController extends AbstractController
             'mainArticle2' => $mainArticle2,
             'mainArticle3' => $mainArticle3,
         ]);
+    }
+
+    /**
+     * @Route("/admin", name="admin")
+     */
+    public function admin()
+    {
+        return $this->render('admin/index.html.twig');
     }
 
     /**
