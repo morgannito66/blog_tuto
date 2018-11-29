@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" data-name="vs/editor/editor.main" href="{{ asset('assets/monaco-editor/min/vs/editor/editor.main.css') }}">
+{% endblock %}
+
+{% block body %}
+
+{% set p1 = '<p class="lead drop-cap">My paragraphe</p>' %}
+{% set p2 = '<p>My paragraphe</p>' %}
+{% set image = '<p><img src="link/image"></p>' %}
+{% set h2 = '<h2>My Title</h2>' %}
+{% set blockquote = '<blockquote><p>My blockquote</p></blockquote>' %}
+{% set code = '<pre><div class="ui top right attached label code">My code</div><code></code></pre>' %}
+{% set list = '<ul><li>My list</li></ul>' %}
+
+<section class="s-content s-content--top-padding s-content--narrow">
+  <div class="row">
+      <div class="col-full s-content__main">
+
+        <div class="row narrow">
+            <div class="col-full s-content__header">
+                <h1 class="display-1 display-1--with-line-sep">Ajouter un article</h1>
+            </div>
+        </div>
+
+        <br>
+
+        <form class="contact-form" action="{{ path('addArticle') }}" method="post">
+
+          {% if error %}
+          <label for="mc-email" id="contactmessage" class="subscribe-message">{{ error }}</label>
+          {% endif %}
+
+          <input name="title" value="" class="full-width" placeholder="Titre de l'article" type="text">
+
+          <!-- <div class="cl-custom-select"> -->
+              <select class="full-width" id="sampleRecipientInput" name="category">
+                {% for category in categories %}
+                  <option value="{{category.id}}">{{category.name}}</option>
+                {% endfor %}
+              </select>
+          <!-- </div> -->
+
+          <input name="privateThumb" value="" class="full-width" placeholder="Lien image dans l'article" type="text">
+
+          <input name="publicThumb" value="" class="full-width" placeholder="Lien image hors article" type="text">
+
+          <input name="tags" value="" class="full-width" placeholder="Les tags" type="text">
+
+          <div class="row block-1-2 block-tab-full">
+            <div class="col-block">
+              <h3>Le contenu :</h3>
+              <div id="container" style="width:auto;height:513px;border:1px solid grey"></div>
+            </div>
+            <div class="col-block">
+                <div class="table-responsive">
+                    <table>
+                            <thead>
+                            <tr>
+                                <th>Type rendu</th>
+                                <th>Code</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Paragraphe Style</td>
+                                <td><code>{{p1}}</code></td>
+                            </tr>
+                            <tr>
+                                <td>Paragraphe basique</td>
+                                <td><code>{{p2}}</code></td>
+                            </tr>
+                            <tr>
+                                <td>Image</td>
+                                <td><code>{{image}}</code></td>
+                            </tr>
+                            <tr>
+                                <td>Titre</td>
+                                <td><code>{{h2}}</code></td>
+                            </tr>
+                            <tr>
+                                <td>Blockquote</td>
+                                <td><code>{{blockquote}}</code></td>
+                            </tr>
+                            <tr>
+                                <td>Code</td>
+                                <td><code>{{code}}</code></td>
+                            </tr>
+                            <tr>
+                                <td>Liste</td>
+                                <td><code>{{list}}</code></td>
+                            </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" class="content" name="content" value="">
+
+        <hr>
+
+        <button type="submit" class="submit btn btn--primary btn--large full-width publish">Publier</button>
+
+      </form>
+
+  </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+<!-- CODE EDITOR -->
+<script>var require = { paths: { 'vs': 'min/vs' } };</script>
+<script src="{{ asset('assets/monaco-editor/min/vs/loader.js') }}"></script>
+<script src="{{ asset('assets/monaco-editor/min/vs/editor/editor.main.nls.js') }}"></script>
+<script src="{{ asset('assets/monaco-editor/min/vs/editor/editor.main.js') }}"></script>
+
+<script>
+	var editor = monaco.editor.create(document.getElementById('container'), {
+		value: [
+			'<div class="myclass" id="myid">',
+			'\t<p>Hello world !</p>',
+			'</div>'
+		].join('\n'),
+		language: 'html'
+	});
+
+	function saveEditor() {
+	   // get the value of the data
+	   var value = editor.getValue()
+	   return value;
+	}
+
+  $('.publish').click(function(){
+    var content = saveEditor();
+    $('.content').val(content);
+  })
+</script>
+{% endblock %}

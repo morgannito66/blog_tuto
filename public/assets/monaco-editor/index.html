@@ -1,0 +1,41 @@
+<!-- DOWNLOAD :
+https://microsoft.github.io/monaco-editor/
+DOC :
+https://microsoft.github.io/monaco-editor/api/index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+	<link rel="stylesheet" data-name="vs/editor/editor.main" href="min/vs/editor/editor.main.css">
+</head>
+<body>
+
+<h2>Monaco Editor Sync Loading Sample</h2>
+<div id="container" style="width:800px;height:600px;border:1px solid grey"></div>
+
+<script>var require = { paths: { 'vs': 'min/vs' } };</script>
+<script src="min/vs/loader.js"></script>
+<script src="min/vs/editor/editor.main.nls.js"></script>
+<script src="min/vs/editor/editor.main.js"></script>
+
+<script>
+	var editor = monaco.editor.create(document.getElementById('container'), {
+		value: [
+			'<div class="myclass" id="myid">',
+			'\t<p>Hello world !</p>',
+			'</div>'
+		].join('\n'),
+		language: 'html'
+	});
+
+	function saveEditor() {
+	   // get the value of the data
+	   var value = editor.getValue()
+	   return value;
+	}
+</script>
+
+</body>
+</html>
