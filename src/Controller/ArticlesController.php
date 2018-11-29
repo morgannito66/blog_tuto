@@ -78,7 +78,8 @@ class ArticlesController extends AbstractController
                  $title = $value->getTitle();
                  $createdAt = $value->getCreatedAt()->format('d/m/Y');;
                  $publicThumb = $value->getPublicThumb();
-                 $arrayArticles[] = array('id' => $id, 'title'=>$title, 'createdAt'=>$createdAt, 'publicThumb' => $publicThumb);
+                 $vue = $value->getVue();
+                 $arrayArticles[] = array('id' => $id, 'title'=>$title, 'createdAt'=>$createdAt, 'publicThumb' => $publicThumb, 'vue' => $vue);
              }
 
             $response = new JsonResponse($arrayArticles);

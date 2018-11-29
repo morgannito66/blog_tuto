@@ -303,7 +303,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
                     $.each(data, function(i, v) {
                         var url = '{{ path("article-standard", {"id": "region_id"}) }}';
                         url = url.replace("region_id", v.id);
-                        resultHTML = '<article class="col-block popular__post"><a href="'+url+'" class="popular__thumb"><img src="{{asset("publicThumb") | imagine_filter('mini_thumb') }}" alt=""></a><h5>'+v.title+'</h5><section class="popular__meta"><span class="popular__author"><span>Par</span> <a href="https://www.cascales.fr/">Grégory Cascales</a></span> <span class="popular__date"><span>le</span> <time datetime="'+v.createdAt+'">'+v.createdAt+'</time></span></section></article>';
+                        resultHTML = '<article class="col-block popular__post"><a href="'+url+'" class="popular__thumb"><img src="{{asset("publicThumb") | imagine_filter('mini_thumb') }}" alt=""></a><h5>'+v.title+'</h5><section class="popular__meta"><span class="popular__author"><span>Par</span> <a href="https://www.cascales.fr/">Grégory Cascales</a></span> <span class="popular__date"><span>-</span> '+v.vue+' vue(s)</span></section></article>';
                         resultHTML = resultHTML.replace("publicThumb", v.publicThumb);
                         $('.popularPost').append(resultHTML);
                     })

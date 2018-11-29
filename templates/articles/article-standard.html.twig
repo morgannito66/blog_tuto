@@ -40,6 +40,8 @@
         <div class="col-full entry__main">
             {{article.content | raw}}
 
+            <hr>
+
             <div class="entry__taxonomies entries">
                 <div class="entry__cat col-block">
                     <h5>Catégorie : </h5>
@@ -55,6 +57,7 @@
                     </span>
                 </div>
 
+                {% if article.tags != null %}
                 <div class="entry__tags col-block">
                     <h5>Tags: </h5>
                     <span class="entry__tax-list entry__tax-list--pill">
@@ -62,7 +65,8 @@
                         <a href="#">{{tag}}</a>
                       {% endfor %}
                     </span>
-                </div> <!-- end entry__tags -->
+                </div>
+                {% endif %}
             </div> <!-- end s-content__taxonomies -->
 
             <div class="entry__author">

@@ -28,7 +28,7 @@
 
         <br>
 
-        <form class="contact-form" action="{{ path('addArticle') }}" method="post">
+        <form class="contact-form" action="{{ path('addArticle') }}" method="post" enctype="multipart/form-data">
 
           {% if error %}
           <label for="mc-email" id="contactmessage" class="subscribe-message">{{ error }}</label>
@@ -44,9 +44,11 @@
               </select>
           <!-- </div> -->
 
-          <input name="privateThumb" value="" class="full-width" placeholder="Lien image dans l'article" type="text">
+          <h3>Image en-tête d'article :</h3>
+          <input type="file" name="privateThumb" accept="image/png, image/jpeg, image/jpg">
 
-          <input name="publicThumb" value="" class="full-width" placeholder="Lien image hors article" type="text">
+          <h3>Image représentative hors-article :</h3>
+          <input type="file" name="publicThumb" accept="image/png, image/jpeg, image/jpg">
 
           <input name="tags" value="" class="full-width" placeholder="Les tags" type="text">
 
