@@ -8,6 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Article;
 use App\Entity\Category;
+use App\GC\AdminBundle\CodeInsertHTML;
 
 class AdminController extends AbstractController
 {
@@ -66,9 +67,13 @@ class AdminController extends AbstractController
                   $tags = null;
                 }
 
+                // convert if have <code> html in content
+                $convertHTML = new CodeInsertHTML();
+                $content = $convertHTML->generateCodeHTML($request->request->get('content'));
+
                 $article = new Article();
                 $article->setTitle($request->request->get('title'));
-                $article->setContent($request->request->get('content'));
+                $article->setContent($content);
                 $article->setTags($tags);
                 $article->setPrivateThumb('assets/img/articles/private/'.$privateThumbName);
                 $article->setPublicThumb('assets/img/articles/public/'.$publicThumbName);

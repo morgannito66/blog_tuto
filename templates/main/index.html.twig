@@ -2,6 +2,22 @@
 
 {% block title %}{{ controller_name }}{% endblock %}
 
+{% block stylesheets %}
+<style media="screen">
+  .thumb_img {
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .entries .item-entry__thumb {
+    width: auto;
+    height: 360px;
+  }
+</style>
+{% endblock %}
+
 {% block body %}
 
 <!-- featured
@@ -108,8 +124,7 @@
                     <div class="item-entry" data-aos="zoom-in">
                         <div class="item-entry__thumb">
                             <a href="{{ path('article-standard', {'id' : article.id}) }}" class="item-entry__thumb-link">
-                                <img src="{{ asset(article.publicThumb) | imagine_filter('cat_thumb') }}"
-                                     alt="">
+                                <div class="thumb_img" style="background-image: url({{ asset(article.publicThumb)}});"></div>
                             </a>
                         </div>
 

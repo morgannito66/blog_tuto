@@ -18,13 +18,31 @@ class MainController extends AbstractController
      * @Route("/", name="index")
      * @Route("/page/{page}", name="indexpagination")
      */
-    public function index($page = 1, PaginatorInterface $paginator, ObjectManager $manager)
+    public function index($page = 1, PaginatorInterface $paginator, ObjectManager $manager, \Swift_Mailer $mailer)
     {
+
+        $tokenClass = new TokenConfirm();
+        $token = $tokenClass->generateTokenConfirm();
+        $linkConfirm = "https://www.titocode.fr/activateNewsletter/".$token;
+        $message = (new \Swift_Message('Hello Email'))
+        ->setFrom('gregory@cascales.fr')
+        ->setTo('gregory.cascales@gmail.com')
+        ->setBody(
+            $this->renderView(
+                // templates/emails/registration.html.twig
+                'emails/confirmToken.html.twig',
+                array('linkConfirm' => $linkConfirm)
+            ),
+            'text/html'
+        );
+
+        $mailer->send($message);
+
         //3ARTICLES MAINS PAGES
         $repoArticle = $this->getDoctrine()->getRepository(Article::class);
-        $mainArticle1 = $repoArticle->find(8);
-        $mainArticle2 = $repoArticle->find(9);
-        $mainArticle3 = $repoArticle->find(10);
+        $mainArticle1 = $repoArticle->find(16);
+        $mainArticle2 = $repoArticle->find(17);
+        $mainArticle3 = $repoArticle->find(15);
 
         //ARTICLES
         $query = $manager->createQuery(
@@ -104,9 +122,11 @@ class MainController extends AbstractController
                      $headers[] = 'To: Invité <'.$mail.'>';
                      $headers[] = 'From: TitoCode <gregory@cascales.fr>';
                      // Envoi
-                     mail($to, $subject, $message, implode("\r\n", $headers));
-
-                    return new JsonResponse("1");
+                     if( mail($to, $subject, $message, implode("\r\n", $headers)) ){
+                       return new JsonResponse("1");
+                     } else {
+                       return new JsonResponse("Problème lors de l'envoi du mail !");
+                     }
                 } else {
                   return new JsonResponse("Email déjà utilisé !");
                 }

@@ -44,6 +44,7 @@ class ArticlesController extends AbstractController
             'article' => $article,
             'recentArticle' => $recentArticle,
             'articleCat' => $articleCat,
+            'nameCategory' => $article->getCategory()->getName(),
         ]);
     }
 

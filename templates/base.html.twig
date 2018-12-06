@@ -6,8 +6,38 @@
     ================================================== -->
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %} - TitoCode</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <!-- REFERENCEMENT NATUREL -->
+    <meta name="description" content="Site web de tutoriels diversifiés pour développeurs Full-Stack. Vous y retrouverez du HTML, CSS, JS, Symfony 4, PHP etc... Un site fait par un étudiant, pour des étudiants.">
+    <meta name="author" content="Grégory Cascales">
+    <meta name="Copyright" content="GCascales">
+    <meta name="Language" content="fr">
+    <meta http-equiv="Content-Language" content="fr">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="Keywords" content="Développeur, Web, HTML, CSS, JS, Symfony, Symfony4, Symfony 4, fr, dévelopment, SIO, tutorial, tutoriel, tutoriels, full-stack, diversité, PHP, how to, blog, france, Grégory Cascales, GCascales, Webdesigner, Webmaster, backend, frontend, back-end, front-end">
+    <meta name="Publisher" content="Grégory Cascales">
+    {% if nameCategory is defined %}
+    <meta name="Category" content="{{nameCategory}}">
+    {% endif %}
+
+    <!-- REFERENCEMENTS RESEAUX SOCIAUX -->
+    <meta property="og:site_name" content="TitoCode" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:url" content="https://titocode.cascales.fr{{path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))}}" />
+    {% if controller_name is defined %}
+    <meta property="og:title" content="{{ controller_name }} - TitoCode" />
+    {% endif %}
+
+
+    {% if article is defined %}
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="{{ asset(article.privateThumb) }}" />
+    {% elseif category is defined %}
+    <meta property="og:type" content="category" />
+    <meta property="og:image" content="{{asset('assets/img/logo-titocode.png')}}" />
+    {% else %}
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="{{asset('assets/img/logo-titocode.png')}}" />
+    {% endif %}
 
     <!-- mobile specific metas
     ================================================== -->
@@ -18,6 +48,7 @@
     <link rel="stylesheet" href="{{asset('assets/Semantic-UI/semantic.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/base.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/vendor.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/feedback.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
 
     <!-- ICONS LINK -->
@@ -58,6 +89,13 @@
         .header__search-trigger {
             background-image: url({{ asset('assets/img/icons/icon-search.svg') }});
         }
+
+        .popular__thumb {
+          height: 6.9rem;
+          width: 6.9rem;
+          background-position: center;
+          background-size: cover;
+        }
     </style>
 
     {% block stylesheets %}{% endblock %}
@@ -84,6 +122,41 @@
             <div></div>
         </div>
     </div>
+
+
+    <!-- feedback
+    ================================================== -->
+    <div class="usrp-fb-2 is-expanded">
+
+          <!-- Expanded content -->
+          <div class="usrp-fb-state-expanded">
+              <div class="usrp-fb-title">DONNEZ NOUS VOTRE AVIS !</div>
+              <!-- WHY SEND FEEDBACK? -->
+              <div class="textFeedback">
+                How can we improve your experience? We’d love to hear it if you have some great ideas or general feedback for us!
+                <div class="usrp-fb-divider"></div>
+                <div class="usrp-fb-btn usrp-fb-btn-yes">Yes</div>
+                <div class="usrp-fb-btn">No</div>
+              </div>
+
+              <!-- FORM SEND FEEDBACK -->
+              <fieldset class="formFeedback" style="display:none;">
+                  <div>
+                      <input name="femail" value="" class="full-width" placeholder="Votre email*" type="text" style="height: 1em;">
+                  </div>
+                  <div class="form-field">
+                      <textarea name="fcontent" class="full-width" placeholder="Votre feedback*" style="height: 5em; min-height: 0rem!important;"></textarea>
+                  </div>
+                  <button type="submit" class="submit btn btn--primary btn--large full-width" style="height: 3em!important; line-height: 3.5rem !important;">Se connecter</button>
+              </fieldset>
+          </div>
+
+          <!-- Collapsed content -->
+          <div class="usrp-fb-state-collapsed">
+              <div class="usrp-fb-title">FEEDBACK</div>
+          </div>
+
+      </div>
 
 
     <!-- header
@@ -275,9 +348,20 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
     <script src="{{asset('assets/js/jquery-3.2.1.min.js')}}"></script>
     <script src="{{asset('assets/Semantic-UI/semantic.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins.js')}}"></script>
+    <script src="{{asset('assets/js/feedback.js')}}"></script>
     <script src="{{asset('assets/js/main.js')}}"></script>
     <script>
         $(document).ready(function(){
+            //Feedback
+            // var _urq = _urq || [];
+            // _urq.push(['initSite', 'b00ea33e-7cdb-4090-a173-e39ae97d07e9']);
+            // (function() {
+            // var ur = document.createElement('script'); ur.type = 'text/javascript'; ur.async = true;
+            // ur.src = ('https:' == document.location.protocol ? 'https://cdn.userreport.com/userreport.js' : 'http://cdn.userreport.com/userreport.js');
+            // var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s);
+            // })();
+
+
             //ajax for catégories
             $.ajax({
                 async: true,
@@ -303,7 +387,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
                     $.each(data, function(i, v) {
                         var url = '{{ path("article-standard", {"id": "region_id"}) }}';
                         url = url.replace("region_id", v.id);
-                        resultHTML = '<article class="col-block popular__post"><a href="'+url+'" class="popular__thumb"><img src="{{asset("publicThumb") | imagine_filter('mini_thumb') }}" alt=""></a><h5>'+v.title+'</h5><section class="popular__meta"><span class="popular__author"><span>Par</span> <a href="https://www.cascales.fr/">Grégory Cascales</a></span> <span class="popular__date"><span>-</span> '+v.vue+' vue(s)</span></section></article>';
+                        resultHTML = '<article class="col-block popular__post"><a href="'+url+'" class="popular__thumb" style="background-image: url({{asset("publicThumb")}})"></a><h5>'+v.title+'</h5><section class="popular__meta"><span class="popular__author"><span>Par</span> <a href="https://www.cascales.fr/">Grégory Cascales</a></span> <span class="popular__date"><span>-</span> '+v.vue+' vue(s)</span></section></article>';
                         resultHTML = resultHTML.replace("publicThumb", v.publicThumb);
                         $('.popularPost').append(resultHTML);
                     })
@@ -335,11 +419,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
                          url : urlAj,
                          success: function (data) {
                            if(data != 1){
-                             if(data == "Email déjà utilisé !"){
-                                $('#submessage').html(data);
-                             } else {
-                                $('#submessage').html('Problème lors de l\'inscription, si le problème persiste réessayez ultérieurement !');
-                             }
+                              $('#submessage').html(data);
                            } else {
                              $('#submessage').html('Un email de confirmation vous à été envoyé !');
                            }

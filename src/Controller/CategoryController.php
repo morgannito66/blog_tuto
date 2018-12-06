@@ -21,6 +21,7 @@ class CategoryController extends AbstractController
             'controller_name' => $category->getName(),
             'category' => $category,
             'articles' => $articles,
+            'nameCategory' => $category->getName(),
         ]);
     }
 

@@ -7,6 +7,22 @@
   .ui.label.code {
     font-size: 1.157143rem;
   }
+
+  .entry__post-thumb {
+    width: 1000px;
+    height: 500px;
+  }
+
+  .thumb_img {
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ui.top.attached.label+[class*="right floated"]+*, .ui.top.attached.label:first-child+:not(.attached) {
+    margin-top: -2rem!important;
+  }
 </style>
 {% endblock %}
 
@@ -19,8 +35,9 @@
 
         <div class="entry__media col-full">
             <div class="entry__post-thumb">
-                <img src="{{ asset(article.privateThumb) | imagine_filter('art_thumb') }}"
-                     sizes="(max-width: 2000px) 100vw, 2000px" alt="">
+                     <div class="thumb_img" style="background-image: url({{ asset(article.privateThumb) }});">
+
+                     </div>
             </div>
         </div>
 
