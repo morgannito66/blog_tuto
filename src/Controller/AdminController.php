@@ -36,7 +36,7 @@ class AdminController extends AbstractController
             $privateThumbName = $this->generateUniqueFileName().'.'.$privateThumb->guessExtension();
             try {
                 $privateThumb->move(
-                    $this->getParameter('kernel.project_dir').'/public/assets/img/articles/private/',
+                    $this->getParameter('kernel.project_dir').'/assets/img/articles/private/',
                     $privateThumbName
                 );
             } catch (FileException $e) {
@@ -48,7 +48,7 @@ class AdminController extends AbstractController
             $publicThumbName = $this->generateUniqueFileName().'.'.$publicThumb->guessExtension();
             try {
                 $publicThumb->move(
-                    $this->getParameter('kernel.project_dir').'/public/assets/img/articles/public/',
+                    $this->getParameter('kernel.project_dir').'/assets/img/articles/public/',
                     $publicThumbName
                 );
             } catch (FileException $e) {

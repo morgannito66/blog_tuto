@@ -18,31 +18,13 @@ class MainController extends AbstractController
      * @Route("/", name="index")
      * @Route("/page/{page}", name="indexpagination")
      */
-    public function index($page = 1, PaginatorInterface $paginator, ObjectManager $manager, \Swift_Mailer $mailer)
+    public function index($page = 1, PaginatorInterface $paginator, ObjectManager $manager)
     {
-
-        $tokenClass = new TokenConfirm();
-        $token = $tokenClass->generateTokenConfirm();
-        $linkConfirm = "https://www.titocode.fr/activateNewsletter/".$token;
-        $message = (new \Swift_Message('Hello Email'))
-        ->setFrom('gregory@cascales.fr')
-        ->setTo('gregory.cascales@gmail.com')
-        ->setBody(
-            $this->renderView(
-                // templates/emails/registration.html.twig
-                'emails/confirmToken.html.twig',
-                array('linkConfirm' => $linkConfirm)
-            ),
-            'text/html'
-        );
-
-        $mailer->send($message);
-
         //3ARTICLES MAINS PAGES
         $repoArticle = $this->getDoctrine()->getRepository(Article::class);
         $mainArticle1 = $repoArticle->find(16);
         $mainArticle2 = $repoArticle->find(17);
-        $mainArticle3 = $repoArticle->find(15);
+        $mainArticle3 = $repoArticle->find(19);
 
         //ARTICLES
         $query = $manager->createQuery(
@@ -87,52 +69,77 @@ class MainController extends AbstractController
 
     /**
      * @Route("/newsletter/{email}", name="newsletter")
+     * @Route("/newsletter/{email}/{token}", name="newsletter_token")
      */
-    public function newsletter($email = null, Request $request, ObjectManager $manager)
+    public function newsletter($email = null, $token = null, Request $request, ObjectManager $manager)
     {
-        //IF AJAX
+        //IF AJAX ADD NEWSLETTER
         if($request->isXmlHttpRequest()){
+
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 //VERIF SI MAIL EXISTE DEJA
                 $emailFind = $this->getDoctrine()->getRepository(Newsletter::class)->findOneBy(['email' => $email]);
                 if($emailFind == null){
-                    //Token Confirm
-                    $tokenClass = new TokenConfirm();
-                    $token = $tokenClass->generateTokenConfirm();
-                    // CREATE NEWSLETTER
-                    $newsletter = new Newsletter;
-                    $newsletter->setEmail($email)
-                               ->setEnabled(0)
-                               ->setToken($token);
-                    $manager->persist($newsletter);
-                    $manager->flush();
 
-                     //sendMail normal
-                     $linkConfirm = "https://www.titocode.fr/activateNewsletter/".$token;
-                     // Plusieurs destinataires
-                     $to  = $mail; // notez la virgule
-                     // Sujet
-                     $subject = 'Confirmez votre adresse email ! - TitoCode';
-                     // message
-                     $message = $this->renderView('emails/confirmToken.html.twig',array('linkConfirm' => $linkConfirm));
-                     // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
-                     $headers[] = 'MIME-Version: 1.0';
-                     $headers[] = 'Content-type: text/html; charset=iso-8859-1';
-                     // En-têtes additionnels
-                     $headers[] = 'To: Invité <'.$mail.'>';
-                     $headers[] = 'From: TitoCode <gregory@cascales.fr>';
-                     // Envoi
-                     if( mail($to, $subject, $message, implode("\r\n", $headers)) ){
-                       return new JsonResponse("1");
-                     } else {
-                       return new JsonResponse("Problème lors de l'envoi du mail !");
-                     }
+                  //Token Confirm
+                  $tokenClass = new TokenConfirm();
+                  $token = $tokenClass->generateTokenConfirm();
+
+                  //send mail
+                  $to  = $email; // notez la virgule
+                  // Sujet
+                  $subject = 'Confirmez votre email pour vous inscrire aux newsletters ! - TitoCode';
+                  // message
+                  $message = $this->renderView('emails/confirmToken.html.twig',array('token' => $token, 'email' => $email));
+
+                  // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
+                  $headers[] = 'MIME-Version: 1.0';
+                  $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+                  // En-têtes additionnels
+                  $headers[] = 'To: '.$email.' <'.$email.'>';
+                  $headers[] = 'From: L\'équipe Titocode <contact@titocode.fr>';
+                  // Envoi
+                   if(mail($to, $subject, $message, implode("\r\n", $headers))){
+                     // CREATE NEWSLETTER
+                     $newsletter = new Newsletter;
+                     $newsletter->setEmail($email)
+                                ->setEnabled(0)
+                                ->setToken($token);
+                     $manager->persist($newsletter);
+                     $manager->flush();
+
+                      return new JsonResponse("1");
+                   } else {
+                      return new JsonResponse("Problème lors du traitement, veuillez contacter contact@titocode.fr");
+                   }
+
                 } else {
                   return new JsonResponse("Email déjà utilisé !");
                 }
             } else {
                 return new JsonResponse("Email invalide");
             }
+        }
+
+        //IF CONFIRM TOKEN
+        if($token != null){
+          $repository = $this->getDoctrine()->getRepository(Newsletter::class);
+          $theNewsletter = $repository->findOneBy([
+              'email' => $email,
+              'token' => $token,
+          ]);
+          if($theNewsletter != null){
+            $theNewsletter->setToken('')
+                          ->setEnabled(1);
+            $manager->persist($theNewsletter);
+            $manager->flush();
+
+            $this->addFlash('success', 'Vous êtes désormais inscrit à notre newsletter, merci de votre confiance !');
+            return $this->redirectToRoute('index');
+          } else {
+            $this->addFlash('warning', 'Le token est incorrect ou épuisé !');
+            return $this->redirectToRoute('index');
+          }
         }
 
         return $this->render('main/error_404.html.twig', [
@@ -191,7 +198,7 @@ class MainController extends AbstractController
               $details = null;
             }
             //send mail
-            $to  = $email; // notez la virgule
+            $to  = 'gregory.cascales@gmail.com'; // notez la virgule
             // Sujet
             $subject = 'Nouveau message d\'un visiteur ! - TitoCode';
             // message
@@ -206,7 +213,7 @@ class MainController extends AbstractController
             $headers[] = 'Content-type: text/html; charset=iso-8859-1';
             // En-têtes additionnels
             $headers[] = 'To: TitoCode <gregory@cascales.fr>';
-            $headers[] = 'From: Invité <'.$email.'>';
+            $headers[] = 'From: TitoCode <gregory@cascales.fr>';
             // Envoi
             if(mail($to, $subject, $message, implode("\r\n", $headers))){
                 return new JsonResponse('1');

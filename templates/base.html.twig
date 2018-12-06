@@ -5,15 +5,15 @@
     <!--- basic page needs
     ================================================== -->
     <meta charset="utf-8">
-    <title>{% block title %}{% endblock %} - TitoCode</title>
+    <title>{% block title %}{% endblock %} - TitoCode | Blog de tutoriels et de veille sur le développement informatique</title>
     <!-- REFERENCEMENT NATUREL -->
-    <meta name="description" content="Site web de tutoriels diversifiés pour développeurs Full-Stack. Vous y retrouverez du HTML, CSS, JS, Symfony 4, PHP etc... Un site fait par un étudiant, pour des étudiants.">
+    <meta name="description" content="Titocode est un site web de tutoriels diversifiés pour développeurs Full-Stack. Vous y retrouverez du HTML, CSS, JS, Symfony 4, PHP etc... Un site fait par un étudiant, pour des étudiants.">
     <meta name="author" content="Grégory Cascales">
     <meta name="Copyright" content="GCascales">
     <meta name="Language" content="fr">
     <meta http-equiv="Content-Language" content="fr">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="Keywords" content="Développeur, Web, HTML, CSS, JS, Symfony, Symfony4, Symfony 4, fr, dévelopment, SIO, tutorial, tutoriel, tutoriels, full-stack, diversité, PHP, how to, blog, france, Grégory Cascales, GCascales, Webdesigner, Webmaster, backend, frontend, back-end, front-end">
+    <meta name="Keywords" content="{% if article is defined %}{% if article.tags != null %}{% for tag in article.tags %}{{tag}},{% endfor %}{% endif %}{% endif %}Développeur, Web, HTML, CSS, JS, Symfony, Symfony4, Symfony 4, fr, dévelopment, SIO, tutorial, tutoriel, tutoriels, full-stack, diversité, PHP, how to, blog, france, Grégory Cascales, GCascales, Webdesigner, Webmaster, backend, frontend, back-end, front-end">
     <meta name="Publisher" content="Grégory Cascales">
     {% if nameCategory is defined %}
     <meta name="Category" content="{{nameCategory}}">
@@ -21,7 +21,6 @@
 
     <!-- REFERENCEMENTS RESEAUX SOCIAUX -->
     <meta property="og:site_name" content="TitoCode" />
-    <meta property="og:locale" content="fr_FR" />
     <meta property="og:url" content="https://titocode.cascales.fr{{path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))}}" />
     {% if controller_name is defined %}
     <meta property="og:title" content="{{ controller_name }} - TitoCode" />
@@ -38,6 +37,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:image" content="{{asset('assets/img/logo-titocode.png')}}" />
     {% endif %}
+
 
     <!-- mobile specific metas
     ================================================== -->
@@ -96,6 +96,20 @@
           background-position: center;
           background-size: cover;
         }
+
+        .ui.message {
+          z-index: 999;
+          top: 1em;
+          max-width: 90%;
+          min-width: 90%;
+          margin: 1em auto auto auto;
+          position: fixed;
+          left: 5%;
+        }
+
+        .ui.message .header:not(.ui) {
+            font-size: .9em;
+        }
     </style>
 
     {% block stylesheets %}{% endblock %}
@@ -108,6 +122,17 @@
     ================================================== -->
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ asset('assets/img/favicon.ico') }}" type="image/x-icon">
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130506158-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-130506158-1');
+	</script>
+
 
 </head>
 
@@ -122,7 +147,6 @@
             <div></div>
         </div>
     </div>
-
 
     <!-- feedback
     ================================================== -->
@@ -206,7 +230,7 @@
                     </ul>
                 </li> -->
                 {# <li><a href="style-guide.html" title="">Styles</a></li> #}
-                <li><a href="{{ path('about') }}" title="">A propos</a></li>
+                <li><a href="{{ path('about') }}" title="">À propos</a></li>
                 <li><a href="{{ path('contact') }}" title="">Contactez-nous</a></li>
             </ul> <!-- end header__nav -->
 
@@ -215,6 +239,36 @@
         </nav> <!-- end header__nav-wrap -->
 
     </header> <!-- s-header -->
+
+    <div class="cont-message">
+    {% for flash_message in app.session.flashbag.get('success') %}
+        <div class="ui success message">
+            <i class="close icon"></i>
+            <div class="header">
+                {{ flash_message }}
+            </div>
+            <p></p>
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashbag.get('info') %}
+        <div class="ui info message">
+            <i class="close icon"></i>
+            <div class="header">
+                {{ flash_message }}
+            </div>
+            <p></p>
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashbag.get('warning') %}
+        <div class="ui warning message">
+            <i class="close icon"></i>
+            <div class="header">
+                {{ flash_message }}
+            </div>
+            <p></p>
+        </div>
+    {% endfor %}
+    </div>
 
     {% block body %}{% endblock %}
 
@@ -274,7 +328,7 @@
                     <h4>À propos de Titocode</h4>
 
                     <p>Titocode est un blog réunissant toutes sortes de tutoriels liés au développement web et applicatif. Fondé en fin 2018 par <a href="https://www.cascales.fr/">Grégory Cascales</a>, le but de ce site est de partager notre savoir à des développeurs débutants, amateurs ou même expérimentés.
-                    Notre diversité dans les languages de programmation permettra ainsi d'élargir, au fil du temps, les catégories de nos tutoriels.</p>
+                    Notre diversité dans les langages de programmation permettra ainsi d'élargir, au fil du temps, les catégories de nos tutoriels.</p>
 
                 </div> <!-- end s-footer__about -->
 
@@ -327,7 +381,7 @@
                 <div class="col-six">
                     <div class="s-footer__copyright">
                         <span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous droits réservés | Développé avec <i class="fa fa-heart" aria-hidden="true"></i> par <a href="https://www.cascales.fr" target="_blank">GCascales</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous droits réservés | Développé avec <i class="fa fa-heart" aria-hidden="true" style="animation: pulse 1s infinite;"></i> par <a href="https://www.cascales.fr" target="_blank">GCascales</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 </span>
                     </div>
@@ -352,15 +406,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
     <script src="{{asset('assets/js/main.js')}}"></script>
     <script>
         $(document).ready(function(){
-            //Feedback
-            // var _urq = _urq || [];
-            // _urq.push(['initSite', 'b00ea33e-7cdb-4090-a173-e39ae97d07e9']);
-            // (function() {
-            // var ur = document.createElement('script'); ur.type = 'text/javascript'; ur.async = true;
-            // ur.src = ('https:' == document.location.protocol ? 'https://cdn.userreport.com/userreport.js' : 'http://cdn.userreport.com/userreport.js');
-            // var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ur, s);
-            // })();
 
+            $('.message .close')
+            .on('click', function() {
+              $(this)
+                .closest('.message')
+                .transition('fade')
+              ;
+            })
+            ;
 
             //ajax for catégories
             $.ajax({
@@ -387,7 +441,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
                     $.each(data, function(i, v) {
                         var url = '{{ path("article-standard", {"id": "region_id"}) }}';
                         url = url.replace("region_id", v.id);
-                        resultHTML = '<article class="col-block popular__post"><a href="'+url+'" class="popular__thumb" style="background-image: url({{asset("publicThumb")}})"></a><h5>'+v.title+'</h5><section class="popular__meta"><span class="popular__author"><span>Par</span> <a href="https://www.cascales.fr/">Grégory Cascales</a></span> <span class="popular__date"><span>-</span> '+v.vue+' vue(s)</span></section></article>';
+                        resultHTML = '<article class="col-block popular__post"><a href="'+url+'" class="popular__thumb" style="background-image: url({{asset("publicThumb")}})"></a><a href="'+url+'"><h5>'+v.title+'</h5></a><section class="popular__meta"><span class="popular__author"><span>Par</span> <a href="https://www.cascales.fr/">Grégory Cascales</a></span> <span class="popular__date"><span>-</span> '+v.vue+' vue(s)</span></section></article>';
                         resultHTML = resultHTML.replace("publicThumb", v.publicThumb);
                         $('.popularPost').append(resultHTML);
                     })
@@ -421,7 +475,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
                            if(data != 1){
                               $('#submessage').html(data);
                            } else {
-                             $('#submessage').html('Un email de confirmation vous à été envoyé !');
+                             $('#submessage').html('Un email de confirmation vous a été envoyé !');
                            }
                          },
                          error: function (){
