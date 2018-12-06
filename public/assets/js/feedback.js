@@ -1,5 +1,11 @@
 $(window).on('load', function() {
 
+        // close icon
+        $('.feedback.close').click(function(){
+          $('.usrp-fb-2').removeClass('is-expanded')
+          setTimeout(function(){ $('.usrp-fb-2').addClass('is-collapsed'); }, 300)
+        })
+
         /* Slide in the feedback message - we suggest doing this only once per session */
         setTimeout(function(){
             $('.usrp-fb-2').addClass('slide-in');

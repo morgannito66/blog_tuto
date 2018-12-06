@@ -154,24 +154,26 @@
 
           <!-- Expanded content -->
           <div class="usrp-fb-state-expanded">
+              <i class="feedback close icon"></i>
               <div class="usrp-fb-title">DONNEZ NOUS VOTRE AVIS !</div>
               <!-- WHY SEND FEEDBACK? -->
               <div class="textFeedback">
-                How can we improve your experience? We’d love to hear it if you have some great ideas or general feedback for us!
+                Comment pouvons-nous améliorer votre expérience? Nous aimerions l'entendre si vous avez de bonnes idées ou des suggestions pour nous!
                 <div class="usrp-fb-divider"></div>
-                <div class="usrp-fb-btn usrp-fb-btn-yes">Yes</div>
-                <div class="usrp-fb-btn">No</div>
+                <div class="usrp-fb-btn usrp-fb-btn-yes">Oui</div>
+                <div class="usrp-fb-btn">Non</div>
               </div>
 
               <!-- FORM SEND FEEDBACK -->
+              <label for="mc-email" id="feedback-message" class="feedback-message"></label>
               <fieldset class="formFeedback" style="display:none;">
                   <div>
-                      <input name="femail" value="" class="full-width" placeholder="Votre email*" type="text" style="height: 1em;">
+                      <input name="femail" id="fEmail" value="" class="full-width" placeholder="Votre email*" type="text" style="height: 1em;">
                   </div>
                   <div class="form-field">
-                      <textarea name="fcontent" class="full-width" placeholder="Votre feedback*" style="height: 5em; min-height: 0rem!important;"></textarea>
+                      <textarea name="fcontent" id="fMessage" class="full-width" placeholder="Votre feedback*" style="height: 5em; min-height: 0rem!important;"></textarea>
                   </div>
-                  <button type="submit" class="submit btn btn--primary btn--large full-width" style="height: 3em!important; line-height: 3.5rem !important;">Se connecter</button>
+                  <button type="button" class="submit btn btn--primary btn--large full-width submitFeedback" style="height: 3em!important; line-height: 3.5rem !important;">Se connecter</button>
               </fieldset>
           </div>
 
@@ -447,6 +449,43 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
                     })
                 },
             });
+
+            /* Feedback
+             * ------------------------------------------------------ */
+            $(".submitFeedback").click(function(){
+              var femail = $('#fEmail').val();
+              var fmessage = $('#fMessage').val();
+              if(femail.length != 0 && fmessage.length != 0){
+                // IF CARACTERES SPECIAUX
+                femail = femail.replace( "/", ' - ' );
+                fmessage = fmessage.replace( "/", ' - ' );
+                //SEND AJAX
+                urlAj = "{{ path('feedback-send', {'Femail' : 'thisemail', 'Fmessage' : 'thismessage'}) }}";
+                urlAj = urlAj.replace( "thisemail", femail );
+                urlAj = urlAj.replace( "thismessage", fmessage );
+                $.ajax({
+                    async: true,
+                    type: 'POST',
+                    url : urlAj,
+                    success: function (data) {
+                      if(data == '1'){
+                        $(".formFeedback").fadeOut( "slow" );
+                        $('#feedback-message').html('Votre feedback a été envoyé avec succès !');
+                        // CLOSE
+                        setTimeout(function(){ $('.usrp-fb-2').removeClass('is-expanded'); }, 1000);
+                        setTimeout(function(){ $('.usrp-fb-2').addClass('is-collapsed'); }, 1300);
+                      } else {
+                        $('#feedback-message').html(data);
+                      }
+                    },
+                    error: function (){
+                      $('#feedback-message').html('Problème lors du traitement de l\'envoi, si le problème persiste réessayez ultérieurement !');
+                    },
+                });
+              } else {
+                $('#feedback-message').html('L\'email et le message sont obligatoire !');
+              }
+            })
 
             /* Newsletter
              * ------------------------------------------------------ */

@@ -119,6 +119,7 @@ $(".submit.btn").click(function(){
       societe = 'Aucun site web - société renseigné(e).';
     }
     // IF CARACTERES SPECIAUX
+    email = email.replace( "/", ' - ' );
     name = name.replace( "/", ' - ' );
     societe = societe.replace( "/", ' - ' );
     message = message.replace( "/", ' - ' );

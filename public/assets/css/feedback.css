@@ -1,4 +1,13 @@
 /* Base styles */
+.feedback.close{
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  cursor: pointer;
+}
+.feedback-message {
+    font-size: .957rem;
+}
 .usrp-fb-2 {
   position: fixed;
   top: 50px;
@@ -7,7 +16,7 @@
   overflow: hidden;
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.8;
   color: #6e7379;
   border-top: 3px solid #2a99f8;
@@ -43,7 +52,7 @@
 /* Divider */
 .usrp-fb-2 .usrp-fb-divider {
   height: 20px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   border-bottom: 1px dashed #d1d6d6;
 }
 
@@ -51,7 +60,9 @@
 .usrp-fb-2 .usrp-fb-btn {
   float: left;
   line-height: 35px;
-  padding: 0 25px;
+  width: 100%;
+  text-align: center;
+  margin-top: 1em;
   margin-right: 20px;
   font-weight: 600;
   color: #ffffff;
@@ -85,7 +96,7 @@
 /* Expanded */
 .usrp-fb-2.is-expanded {
   width: 250px;
-  height: 300px;
+  height: 355px;
   -webkit-box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.15);
   box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.15);
