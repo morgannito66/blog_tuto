@@ -48,6 +48,7 @@
     <link rel="stylesheet" href="{{asset('assets/Semantic-UI/semantic.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/base.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/vendor.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/cookies.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/feedback.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
 
@@ -183,6 +184,10 @@
           </div>
 
       </div>
+
+      <!-- Cookies
+      ================================================== -->
+      <!-- COOKIES CONTROL HERE -->
 
 
     <!-- header
@@ -405,6 +410,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
     <script src="{{asset('assets/Semantic-UI/semantic.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins.js')}}"></script>
     <script src="{{asset('assets/js/feedback.js')}}"></script>
+    <script src="{{asset('assets/js/cookies.js')}}"></script>
     <script src="{{asset('assets/js/main.js')}}"></script>
     <script>
         $(document).ready(function(){
@@ -474,6 +480,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
                         // CLOSE
                         setTimeout(function(){ $('.usrp-fb-2').removeClass('is-expanded'); }, 1000);
                         setTimeout(function(){ $('.usrp-fb-2').addClass('is-collapsed'); }, 1300);
+                        // ADD COOKIES
+                        setCookie('feedback', 1);
                       } else {
                         $('#feedback-message').html(data);
                       }
