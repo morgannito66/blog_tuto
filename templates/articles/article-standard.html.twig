@@ -59,6 +59,35 @@
 
             <hr>
 
+            <!-- SHARE LINKS -->
+            <div class="shareSpace">
+                <div class="btShare">
+                    <a target="_blank" rel="external nofollow" href="https://www.facebook.com/sharer/sharer.php?u=https://titocode.cascales.fr/article-standard/{{article.id}}">
+                        <img class="iconShare" alt="Partage Facebook" src="{{ asset("assets/img/socials/iconFacebook.png") }}"></a>
+                </div>
+                <div class="btShare">
+                    <a target="_blank" href="https://twitter.com/intent/tweet?url=https://titocode.cascales.fr/article-standard/{{article.id}}&text={{article.title}}&hashtags=TitoCode" rel="external nofollow">
+                        <img class="iconShare" alt="Partage Twitter" src="{{ asset("assets/img/socials/iconTwitter.png") }}">
+                    </a>
+                </div>
+                <div class="btShare">
+                    <a target="_blank" rel="external nofollow" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://titocode.cascales.fr/article-standard/{{article.id}}&amp;title={{article.title}}&amp;summary={{article.title}}&amp;source=LinkedIn">
+                        <img class="iconShare" alt="Partage Linkedin" src="{{ asset("assets/img/socials/iconLinkedin.png") }}"></a>
+                </div>
+                <div class="btShare">
+                    <a target="_blank" rel="external nofollow" href="https://plus.google.com/share?url=https://titocode.cascales.fr/article-standard/{{article.id}}&amp;hl={{article.title}}">
+                        <img class="iconShare" alt="Partage Google+" src="{{ asset("assets/img/socials/iconGoogle.png") }}">
+                    </a>
+                </div>
+                <div class="btShare">
+                    <a href="mailto:?subject={{article.title}}&amp;body=https://titocode.cascales.fr/article-standard/{{article.id}}">
+                        <img class="iconShare" alt="Partage Mail" src="{{ asset("assets/img/socials/iconMail.png") }}">
+                    </a>
+                </div>
+            </div>
+
+            <hr>
+
             <div class="entry__taxonomies entries">
                 <div class="entry__cat col-block">
                     <h5>Catégorie : </h5>
@@ -132,7 +161,7 @@
 
                 <h3 class="h2">5 Commentaires</h3>
 
-                
+
                 <ol class="commentlist">
 
                     <li class="depth-1 comment">
