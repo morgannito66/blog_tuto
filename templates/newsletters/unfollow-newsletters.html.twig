@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Désinscription newsletters{% endblock %}
+
+{% block body %}
+<section class="s-content s-content--top-padding s-content--narrow">
+
+    <div class="row narrow">
+        <div class="col-full s-content__header">
+            <h1 class="display-1 display-1--with-line-sep">Désinscription newsletters.</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-full s-content__main">
+            <!-- <form name="cForm" id="cForm" class="contact-form" action="" method="post"> -->
+
+                <label for="mc-email" id="newslettermessage" class="subscribe-message" style="margin-top: 1em;"></label>
+
+                <fieldset>
+                    <div>
+                        <input name="email" value="" class="full-width eConfirm" placeholder="Votre adresse email*" type="text">
+                    </div>
+                    <button type="submit" class="submit btn btn--primary btn--large full-width submitNewsletter">Se désinscrire</button>
+                </fieldset>
+
+            <!-- </form> -->
+        </div> <!-- s-content__main -->
+    </div> <!-- end row -->
+
+</section>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+//RACOURCI ENTER
+$('.eConfirm').keypress(function(e){
+    if( e.which == 13 ){
+        $( ".submitNewsletter" ).trigger( "click" );
+    }
+});
+
+//IF GO FORM
+$('.submitNewsletter').click(function(){
+  var eCrypt = "{{ app.request.get('email') }}";
+  var eConfirm = $('.eConfirm').val();
+  var myurl = '{{ path("unfollow-newsletters", {"email": "region_email", "confirm": "region_confirm"}) }}';
+  myurl = myurl.replace("region_email", eCrypt);
+  myurl = myurl.replace("region_confirm", eConfirm);
+  $.ajax({
+      async: true,
+      type: 'POST',
+      url: myurl,
+      success: function (data) {
+          if(data == 1){
+            //Désinscription réussite
+            $('.submitNewsletter').removeClass('submitNewsletter');
+            $('#newslettermessage').html('Désinscription réussite, vous allez être redirigé.');
+            window.location.href = "{{ path("index") }}";
+          } else {
+            $('#newslettermessage').html(data);
+          }
+      },
+  });
+});
+</script>
+{% endblock %}

@@ -305,7 +305,7 @@
                     </div> <!-- end categories -->
 
                     <div class="col-six md-six mob-full sitelinks">
-                        <h3>Site Links</h3>
+                        <h3>Raccourcis</h3>
 
                         <ul class="linklist">
                             <li><a href="{{path('index')}}">Accueil</a></li>
@@ -497,6 +497,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
 
             /* Newsletter
              * ------------------------------------------------------ */
+             //RACOURCI ENTER
+             $('.emailNewsletters').keypress(function(e){
+                 if( e.which == 13 ){
+                     $( ".subNewsletters" ).trigger( "click" );
+                 }
+             });
+
+             //FUNCTION
              var clAjaxChimp = function() {
 
                function isEmail(email) {
