@@ -14,38 +14,44 @@ class ArticlesController extends AbstractController
     /**
      * @Route("/article-standard/{id}", name="article-standard")
      */
-    public function article_standard(Article $article, ObjectManager $manager)
+    public function article_standard(Article $article = null, ObjectManager $manager)
     {
-        // AJOUTER +1 aux vues
-        $article->add1Vue();
-        $manager->persist($article);
-        $manager->flush();
+        if($article != null){
+          // AJOUTER +1 aux vues
+          $article->add1Vue();
+          $manager->persist($article);
+          $manager->flush();
 
-        //Article récent
-        $repoArticle = $this->getDoctrine()->getRepository(Article::class);
-        $recentArticle = $repoArticle->findOneBy(
-            array(),
-            array('id' => 'desc')
-        );
+          //Article récent
+          $repoArticle = $this->getDoctrine()->getRepository(Article::class);
+          $recentArticle = $repoArticle->findOneBy(
+              array(),
+              array('id' => 'desc')
+          );
 
-        //Article récent hasard de la meme catégorie
-        $articlesCat = $repoArticle->createQueryBuilder('c')
-                                      ->where('c.category = :category')
-                                      ->setParameter('category', $article->getCategory())
-                                      ->orderBy('RAND()')
-                                      ->setMaxResults(1)
-                                      ->getQuery()
-                                      ->execute();
-        $articleCat = $articlesCat[0];
+          //Article récent hasard de la meme catégorie
+          $articlesCat = $repoArticle->createQueryBuilder('c')
+                                        ->where('c.category = :category')
+                                        ->setParameter('category', $article->getCategory())
+                                        ->orderBy('RAND()')
+                                        ->setMaxResults(1)
+                                        ->getQuery()
+                                        ->execute();
+          $articleCat = $articlesCat[0];
 
 
-        return $this->render('articles/article-standard.html.twig', [
-            'controller_name' => $article->getTitle(),
-            'article' => $article,
-            'recentArticle' => $recentArticle,
-            'articleCat' => $articleCat,
-            'nameCategory' => $article->getCategory()->getName(),
-        ]);
+          return $this->render('articles/article-standard.html.twig', [
+              'controller_name' => $article->getTitle(),
+              'article' => $article,
+              'recentArticle' => $recentArticle,
+              'articleCat' => $articleCat,
+              'nameCategory' => $article->getCategory()->getName(),
+          ]);
+        } else {
+          return $this->render('main/error_404.html.twig', [
+              'controller_name' => 'Page introuvable',
+          ]);
+        }
     }
 
     /**

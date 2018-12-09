@@ -13,16 +13,21 @@ class CategoryController extends AbstractController
     /**
      * @Route("/category/{id}", name="category")
      */
-    public function category(Category $category)
+    public function category(Category $category = null)
     {
-      $articles = $category->getArticles();
-
+      if($category != null){
+        $articles = $category->getArticles();
         return $this->render('category/category.html.twig', [
             'controller_name' => $category->getName(),
             'category' => $category,
             'articles' => $articles,
             'nameCategory' => $category->getName(),
         ]);
+      } else {// NOT FOUND
+        return $this->render('main/error_404.html.twig', [
+            'controller_name' => 'Page introuvable',
+        ]);
+      }
     }
 
     /**
