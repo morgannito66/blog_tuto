@@ -12,6 +12,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ContactController extends AbstractController
 {
     /**
+     * @Route("/contact", name="contact")
+     */
+    public function contact()
+    {
+        return $this->render('main/contact.html.twig', [
+            'controller_name' => 'Contactez-nous',
+            'recaptcha_publicKey' => $this->getParameter('RecaptchaBundle.publicKey'),
+        ]);
+    }
+
+    /**
      * @Route("/contact/sendContact", name="contact-send")
      * @Route("/feedback/{Femail}/{Fmessage}", name="feedback-send")
      */
@@ -28,7 +39,7 @@ class ContactController extends AbstractController
         //Traitement
         if(!empty($name) AND !empty($email) AND !empty($message) AND !empty($captcha)){ //CONTACT
           if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $recaptcha = new ReCaptcha('6LeCQYAUAAAAAMjYbCHNW0y3ZNg7doC_ZZ6-oj0_', new CurlPost);
+            $recaptcha = new ReCaptcha($this->getParameter('RecaptchaBundle.privateKey'), new CurlPost);
             $resp = $recaptcha->verify($captcha);
             if($resp->isSuccess()){
               //Get ip + infos

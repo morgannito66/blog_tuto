@@ -56,16 +56,6 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/contact", name="contact")
-     */
-    public function contact()
-    {
-        return $this->render('main/contact.html.twig', [
-            'controller_name' => 'Contactez-nous',
-        ]);
-    }
-
-    /**
      * @Route("/rechercher/{word}", name="rechercher")
      */
     public function rechercher($word = null, ObjectManager $manager)
