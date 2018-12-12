@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+<section class="s-content s-content--top-padding s-content--narrow">
+  <form class="" action="#" method="post">
+    <div class="g-recaptcha" data-sitekey="6LeCQYAUAAAAAPG1LYMmoNbIUj71tAWuGyRmqwW5"></div>
+    <button type="submit" name="button">Submit</button>
+  </form>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+<!-- CAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock %}

@@ -87,7 +87,11 @@
                     </div>
 
                     <div class="message form-field">
-                    <textarea name="cMessage" id="cMessage" class="full-width" placeholder="Votre message*"></textarea>
+                        <textarea name="cMessage" id="cMessage" class="full-width" placeholder="Votre message*"></textarea>
+                    </div>
+
+                    <div class="form-field" style="padding-top: 1em;">
+                        <div class="g-recaptcha" data-sitekey="6LeCQYAUAAAAAPG1LYMmoNbIUj71tAWuGyRmqwW5"></div>
                     </div>
 
                     <button type="submit" class="submit btn btn--primary btn--large full-width">Envoyer le message</button>
@@ -105,6 +109,9 @@
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzHLqLju-cIsAzlyTbYujt8-Xhq6MN1Fc&callback=initMap"
  type="text/javascript"></script> -->
 
+ <!-- CAPTCHA -->
+ <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <script type="text/javascript">
 /* SEND CONTACT
 * ------------------------------------------------------ */
@@ -113,7 +120,8 @@ $(".submit.btn").click(function(){
   var email = $('#cEmail').val();
   var societe = $('#cWebsite').val();
   var message = $('#cMessage').val();
-  if(name.length != 0 && email.length != 0 && message.length != 0){
+  var myCaptcha = $('[name^=g-recaptcha-response]').val();
+  if(name.length != 0 && email.length != 0 && message.length != 0 && myCaptcha.length != 0){
     // IF SOCIETE NULL
     if(societe.length == ''){
       societe = 'Aucun site web - société renseigné(e).';
@@ -124,15 +132,12 @@ $(".submit.btn").click(function(){
     societe = societe.replace( "/", ' - ' );
     message = message.replace( "/", ' - ' );
     //SEND AJAX
-    urlAj = "{{ path('contact-send', {'name' : "thisname", 'email' : 'thisemail', 'message' : 'thismessage', 'societe' : 'thissociete'}) }}";
-    urlAj = urlAj.replace( "thisname", name );
-    urlAj = urlAj.replace( "thisemail", email );
-    urlAj = urlAj.replace( "thismessage", message );
-    urlAj = urlAj.replace( "thissociete", societe );
+    urlAj = "{{ path('contact-send') }}";
     $.ajax({
         async: true,
         type: 'POST',
         url : urlAj,
+        data: {'name' : name, 'email' : email, 'message' : message, 'societe' : societe, 'captcha' : myCaptcha},
         success: function (data) {
           if(data == '1'){
             $(".formForDisabled").fadeOut( "slow" );
@@ -142,11 +147,11 @@ $(".submit.btn").click(function(){
           }
         },
         error: function (){
-          $('#contactmessage').html('Problème lors de l\'inscription, si le problème persiste réessayez ultérieurement !');
+          $('#contactmessage').html('Nous rencontrons actuellement un problème, si ce dernier persiste réessayez ultérieurement !');
         },
     });
   } else {
-    $('#contactmessage').html('Le nom, email et message sont obligatoire !');
+    $('#contactmessage').html('Le nom, email, message et captcha sont obligatoire !');
   }
 })
 
