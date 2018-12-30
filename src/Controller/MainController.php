@@ -9,6 +9,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Article;
+use Stripe\Stripe;
+use Stripe\Charge;
 
 class MainController extends AbstractController
 {
@@ -16,8 +18,23 @@ class MainController extends AbstractController
      * @Route("/", name="index")
      * @Route("/page/{page}", name="indexpagination")
      */
-    public function index($page = 1, PaginatorInterface $paginator, ObjectManager $manager)
+    public function index($page = 1, PaginatorInterface $paginator, ObjectManager $manager, Request $request)
     {
+        // STRIPE
+        if(!empty($request->request->get('stripeToken'))){
+            Stripe::setApiKey("sk_test_NbH2VioANbwAM7RwxmrzFA5B");
+            $token = $request->request->get('stripeToken');
+            $charge = Charge::create([
+                'amount' => 100,
+                'currency' => 'eur',
+                'description' => 'Test charge',
+                'source' => $token,
+            ]);
+            $charge = $charge->getLastResponse();
+            $charge = (array)$charge; //Convert array pour le foreach
+            dump($charge['json']);
+        }
+
         //3ARTICLES MAINS PAGES
         $repoArticle = $this->getDoctrine()->getRepository(Article::class);
         $mainArticle1 = $repoArticle->find(16);
@@ -52,6 +69,16 @@ class MainController extends AbstractController
     {
         return $this->render('main/about.html.twig', [
             'controller_name' => 'À propos',
+        ]);
+    }
+
+    /**
+     * @Route("/404", name="404")
+     */
+    public function notfound()
+    {
+        return $this->render('main/error_404.html.twig', [
+            'controller_name' => 'Page introuvable',
         ]);
     }
 

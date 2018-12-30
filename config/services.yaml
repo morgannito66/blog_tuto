@@ -5,8 +5,9 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    RecaptchaBundle.privateKey: '6LeCQYAUAAAAAMjYbCHNW0y3ZNg7doC_ZZ6-oj0_'
-    RecaptchaBundle.publicKey: '6LeCQYAUAAAAAPG1LYMmoNbIUj71tAWuGyRmqwW5'
+    RecaptchaBundle:
+        privateKey: '6LeCQYAUAAAAAMjYbCHNW0y3ZNg7doC_ZZ6'
+        publicKey: '6LeCQYAUAAAAAPG1LYMmoNbIUj71tAWuGyRmqwW5'
 
 services:
     # default configuration for services in *this* file

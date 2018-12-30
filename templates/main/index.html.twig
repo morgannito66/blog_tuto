@@ -208,5 +208,18 @@
             </div>
           {% endif %}
 
+          <form action="#" method="POST">
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_Q7IQQm5rTK9urAw1eCKf4bR5"
+              data-amount="100"
+              data-name="cascales.fr"
+              data-description="Test charge"
+              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+              data-locale="auto"
+              data-currency="eur">
+            </script>
+          </form>
+
     </section> <!-- end s-content -->
 {% endblock %}

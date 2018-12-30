@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ controller_name }}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{asset('assets/css/download.css')}}">
+{% endblock %}
+
+{% block body %}
+<section class="s-content s-content--top-padding s-content--narrow">
+
+  <div class="row narrow">
+      <div class="col-full s-content__header">
+          <h1 class="display-1 display-1--with-line-sep" style="font-size:2em;">Téléchargez votre fichier en cliquant sur la flèche ci-dessous.</h1>
+          <p class="lead" style="font-size:1em;">
+          Attention, une fois téléchargé vous ne pourrez plus acceder à cette page pour des raisons de sécurité !</p>
+      </div>
+  </div>
+
+  <div class="container-fluid">
+  	<div class="row">
+  		<div id="ms-container">
+  			<label for="ms-download" class="ms-download">
+  				<div class="ms-content">
+  					<div class="ms-content-inside">
+  						<input type="checkbox" id="ms-download" />
+  						<div class="ms-line-down-container">
+  							<div class="ms-line-down"></div>
+  						</div>
+  						<div class="ms-line-point"></div>
+  					</div>
+  				</div>
+  			</label>
+  		</div>
+  	</div>
+  </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+  $("#ms-download").click(function(){
+    if($(this).is(":checked")){
+      //GO LINK DOWNLOAD
+      window.open('{{asset(commande.article.source)}}', '_blank');
+      // AJAX CHECK BEDOWNLOAD IN COMMANDE
+      $.ajax({
+          async: true,
+          type: 'POST',
+          url: "{{ path('commande-checked', {"ref": commande.ref}) }}",
+          success: function (data) {
+              if(data != 1){
+                window.location.reload();
+              }
+          },
+      });
+    }
+  })
+</script>
+{% endblock %}

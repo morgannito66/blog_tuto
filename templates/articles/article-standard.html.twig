@@ -23,13 +23,100 @@
   .ui.top.attached.label+[class*="right floated"]+*, .ui.top.attached.label:first-child+:not(.attached) {
     margin-top: -2rem!important;
   }
+
+  .formPay {
+      margin: .5em;
+  }
+
+  .descPay {
+    margin: auto;
+    text-align: center;
+    width: 50%;
+  }
+
+  .descPayFinish {
+    margin: auto;
+    text-align: center;
+    width: 100%;
+  }
+
+  .divFormPayFinish {
+    width: 100%;
+    text-align: center;
+  }
+
+  .divFormPay {
+    width: 50%;
+  }
+
+  .paythis {
+    margin: 4em;
+    background-image: url(https://themepalace.com/wp-content/uploads/2018/03/stripe-banner.jpg);
+  }
+
+  .stripe-button-el {
+    padding: 1em!important;
+    margin: auto!important;
+  }
+
+  .stripe-button-el span {
+    background: none!important;
+    box-shadow: none!important;
+  }
 </style>
 {% endblock %}
 
 {% block body %}
 <!-- s-content
 ================================================== -->
-<section class="s-content s-content--top-padding s-content--narrow">
+
+<section class="s-content s-content--top-padding s-content--narrow"
+  {% if article.source is not null %}
+    style="padding-top:6rem;"
+  {% endif %}
+>
+
+  {% if article.source is not null %}
+    <div class="entry__author paythis" style="margin: 4em;">
+
+        {% if responsePayment is null %}
+          <div class="entry__author-about">
+              <h5 class="entry__author-name descPay">
+                  <span>Acheter le</span>
+                  <b>Code source du tutoriel</b>
+                  <span>pour seulement 2.99€</span>
+              </h5>
+
+              <div class="entry__author-desc divFormPay">
+                <form class="formPay" action="#" method="POST">
+                  <script
+                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="pk_test_Q7IQQm5rTK9urAw1eCKf4bR5"
+                    data-amount="299"
+                    data-name="Titocode.fr"
+                    data-description="Achat du code source lié au tutoriel #{{article.id}} pour 2,99€"
+                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                    data-locale="auto"
+                    data-currency="eur">
+                  </script>
+                </form>
+              </div>
+          </div>
+        {% else %}
+          <div class="entry__author-about">
+              <h5 class="entry__author-name descPayFinish">
+                  <b>Merci pour votre achat !</b>
+                  <span>#{{responsePayment.ref}}</span>
+              </h5>
+
+              <div class="entry__author-desc divFormPayFinish">
+                <p>Le dossier compressé contenant le code source vous a été envoyé par mail sur l'adresse suivant : "<b>{{responsePayment.email}}</b>".<br> Vous pouvez télécharger le code source directement en <a href="{{path('commande-source', {"ref" : responsePayment.ref}) }}">cliquant ici</a>. <br>Si vous rencontrez un problème avec votre achat, merci de bien vouloir nous contacter.</p>
+              </div>
+          </div>
+        {% endif %}
+
+    </div>
+  {% endif %}
 
     <article class="row entry format-standard">
 

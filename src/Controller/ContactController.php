@@ -18,7 +18,7 @@ class ContactController extends AbstractController
     {
         return $this->render('main/contact.html.twig', [
             'controller_name' => 'Contactez-nous',
-            'recaptcha_publicKey' => $this->getParameter('RecaptchaBundle.publicKey'),
+            'recaptcha_publicKey' => $this->getParameter('RecaptchaBundle')['publicKey'],
         ]);
     }
 
@@ -39,7 +39,7 @@ class ContactController extends AbstractController
         //Traitement
         if(!empty($name) AND !empty($email) AND !empty($message) AND !empty($captcha)){ //CONTACT
           if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $recaptcha = new ReCaptcha($this->getParameter('RecaptchaBundle.privateKey'), new CurlPost);
+            $recaptcha = new ReCaptcha($this->getParameter('RecaptchaBundle')['privateKey'], new CurlPost);
             $resp = $recaptcha->verify($captcha);
             if($resp->isSuccess()){
               //Get ip + infos
