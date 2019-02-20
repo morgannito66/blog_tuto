@@ -66,12 +66,39 @@ code {
 
         // ARTICLE HTML TEST
         $article = new Article();
-        $article->setTitle("Mon 1er article")
-                ->setPrivateThumb("assets/img/thumbs/single/standard/standard-1000.jpg")
-                ->setPublicThumb("assets/img/thumbs/post/lamp-400.jpg")
-                ->setContent($content)
-                ->setCreatedAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')))
-                ->setTags(array("Cool", "Facile"))
+        $article->setTitle("Ouverture de TitoCode")
+                ->setPrivateThumb("assets/img/articles/public/opened.jpg")
+                ->setPublicThumb("assets/img/articles/public/opened.jpg")
+                ->setContent('<blockquote><p>L\'aventure, c\'est d\'abord l\'ouverture aux autres.</p></blockquote>
+
+<p>
+Titocode ouvre désormais ses portes au web mais ce n\'est qu\'un début. Le site n\'est pas encore dans sa forme finale. Vous pouvez évidement avoir accès aux tutoriels présents sur le site mais d\'autres choses sont à venir.
+</p>
+
+<p>
+Ce que nous prévoyons pour l\'avenir :
+<ul>
+<li>
+Un système d\'inscription et une interface dédiée aux utilisateurs inscrit sur Titocode qui auront accès à des avantages par rapport aux visiteurs.
+</li>
+<li>
+Des espaces commentaires pour chaque article si jamais vous avez un problème pendant le suivi d\'un tutoriel ou même si vous souhaitez déposer un avis sur l\'un de nos articles.
+</li>
+<li>
+Une boutique de morceaux de code et de templates HTML et Symfony4.
+</li>
+</ul>
+</p>
+
+<p>
+Si toutefois vous souhaitez nous contacter, un formulaire de contact est mis à votre disposition dans l\'onglet <a href="https://titocode.cascales.fr/contact">Contactez-nous</a> !
+</p>
+
+<p>
+L\'équipe TitoCode.
+</p>')
+                ->setCreatedAt(\DateTime::createFromFormat('Y-m-d H:i:s', "2018-11-30 13:25:08"))
+                ->setTags(array("Mise en ligne", "TitoCode"))
                 ->setType("standard")
                 ->setVue(1)
                 ->setCategory($this->getReference(aCategoryFixtures::CAT_HTML));

@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Newsletter;
 use App\GC\UserBundle\TokenConfirm;
+use App\GC\MailBundle\Mail as GCMailer;
 
 class NewslettersController extends AbstractController
 {
@@ -85,14 +86,9 @@ class NewslettersController extends AbstractController
                   // message
                   $message = $this->renderView('emails/confirmToken.html.twig',array('token' => $token, 'email' => $email, 'eCrypt' => $eCrypt,));
 
-                  // Pour envoyer un mail HTML, l'en-tête Content-type doit être défini
-                  $headers[] = 'MIME-Version: 1.0';
-                  $headers[] = 'Content-type: text/html; charset=iso-8859-1';
-                  // En-têtes additionnels
-                  $headers[] = 'To: '.$email.' <'.$email.'>';
-                  $headers[] = 'From: L\'équipe Titocode <contact@titocode.fr>';
-                  // Envoi
-                   if(mail($to, $subject, $message, implode("\r\n", $headers))){
+                  //PHP MAILER
+                  $mail = new GCMailer();
+                  if($mail->sendEmail($subject, $message, $to)){
                      // CREATE NEWSLETTER
                      $newsletter = new Newsletter;
                      $newsletter->setEmail($email)
@@ -103,7 +99,7 @@ class NewslettersController extends AbstractController
 
                       return new JsonResponse("1");
                    } else {
-                      return new JsonResponse("Problème lors du traitement, veuillez contacter contact@titocode.fr");
+                      return new JsonResponse("Problème lors du traitement, veuillez contacter titocode@cascales.fr");
                    }
 
                 } else {

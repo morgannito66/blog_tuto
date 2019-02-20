@@ -60,7 +60,7 @@
                 <div class="col-six tab-full">
                     <h4>Informations de contact</h4>
 
-                    <p>gregory@cascales.fr<br>
+                    <p>titocode@cascales.fr<br>
                     <!-- info@wordsmith.com <br> -->
                     Téléphone: (+33) 06 16 99 66 75
                     </p>
@@ -90,10 +90,6 @@
                         <textarea name="cMessage" id="cMessage" class="full-width" placeholder="Votre message*"></textarea>
                     </div>
 
-                    <div class="form-field" style="padding-top: 1em;">
-                        <div class="g-recaptcha" data-sitekey="{{ recaptcha_publicKey }}"></div>
-                    </div>
-
                     <button type="submit" class="submit btn btn--primary btn--large full-width">Envoyer le message</button>
 
                 </fieldset>
@@ -109,9 +105,6 @@
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzHLqLju-cIsAzlyTbYujt8-Xhq6MN1Fc&callback=initMap"
  type="text/javascript"></script> -->
 
- <!-- CAPTCHA -->
- <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
 <script type="text/javascript">
 /* SEND CONTACT
 * ------------------------------------------------------ */
@@ -120,8 +113,7 @@ $(".submit.btn").click(function(){
   var email = $('#cEmail').val();
   var societe = $('#cWebsite').val();
   var message = $('#cMessage').val();
-  var myCaptcha = $('[name^=g-recaptcha-response]').val();
-  if(name.length != 0 && email.length != 0 && message.length != 0 && myCaptcha.length != 0){
+  if(name.length != 0 && email.length != 0 && message.length != 0){
     // IF SOCIETE NULL
     if(societe.length == ''){
       societe = 'Aucun site web - société renseigné(e).';
@@ -137,7 +129,7 @@ $(".submit.btn").click(function(){
         async: true,
         type: 'POST',
         url : urlAj,
-        data: {'name' : name, 'email' : email, 'message' : message, 'societe' : societe, 'captcha' : myCaptcha},
+        data: {'name' : name, 'email' : email, 'message' : message, 'societe' : societe},
         success: function (data) {
           if(data == '1'){
             $(".formForDisabled").fadeOut( "slow" );
@@ -151,7 +143,7 @@ $(".submit.btn").click(function(){
         },
     });
   } else {
-    $('#contactmessage').html('Le nom, email, message et captcha sont obligatoire !');
+    $('#contactmessage').html('Le nom, email, et message sont obligatoires !');
   }
 })
 

@@ -151,22 +151,21 @@
 
     <!-- feedback
     ================================================== -->
-    <div class="usrp-fb-2 is-expanded">
+    <!-- <div class="usrp-fb-2 is-expanded"> -->
 
           <!-- Expanded content -->
-          <div class="usrp-fb-state-expanded">
+          <!-- <div class="usrp-fb-state-expanded">
               <i class="feedback close icon"></i>
               <div class="usrp-fb-title">DONNEZ NOUS VOTRE AVIS !</div>
-              <!-- WHY SEND FEEDBACK? -->
               <div class="textFeedback">
                 Comment pouvons-nous améliorer votre expérience? Nous aimerions l'entendre si vous avez de bonnes idées ou des suggestions pour nous!
                 <div class="usrp-fb-divider"></div>
                 <div class="usrp-fb-btn usrp-fb-btn-yes">Oui</div>
                 <div class="usrp-fb-btn">Non</div>
-              </div>
+              </div> -->
 
               <!-- FORM SEND FEEDBACK -->
-              <label for="mc-email" id="feedback-message" class="feedback-message"></label>
+              <!-- <label for="mc-email" id="feedback-message" class="feedback-message"></label>
               <fieldset class="formFeedback" style="display:none;">
                   <div>
                       <input name="femail" id="fEmail" value="" class="full-width" placeholder="Votre email*" type="text" style="height: 1em;">
@@ -176,14 +175,14 @@
                   </div>
                   <button type="button" class="submit btn btn--primary btn--large full-width submitFeedback" style="height: 3em!important; line-height: 3.5rem !important;">Envoyer</button>
               </fieldset>
-          </div>
+          </div> -->
 
           <!-- Collapsed content -->
-          <div class="usrp-fb-state-collapsed">
+          <!-- <div class="usrp-fb-state-collapsed">
               <div class="usrp-fb-title">FEEDBACK</div>
           </div>
 
-      </div>
+      </div> -->
 
       <!-- Cookies
       ================================================== -->
@@ -457,42 +456,42 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Tous 
 
             /* Feedback
              * ------------------------------------------------------ */
-            $(".submitFeedback").click(function(){
-              var femail = $('#fEmail').val();
-              var fmessage = $('#fMessage').val();
-              if(femail.length != 0 && fmessage.length != 0){
-                // IF CARACTERES SPECIAUX
-                femail = femail.replace( "/", ' - ' );
-                fmessage = fmessage.replace( "/", ' - ' );
-                //SEND AJAX
-                urlAj = "{{ path('feedback-send', {'Femail' : 'thisemail', 'Fmessage' : 'thismessage'}) }}";
-                urlAj = urlAj.replace( "thisemail", femail );
-                urlAj = urlAj.replace( "thismessage", fmessage );
-                $.ajax({
-                    async: true,
-                    type: 'POST',
-                    url : urlAj,
-                    success: function (data) {
-                      if(data == '1'){
-                        $(".formFeedback").fadeOut( "slow" );
-                        $('#feedback-message').html('Votre feedback a été envoyé avec succès !');
-                        // CLOSE
-                        setTimeout(function(){ $('.usrp-fb-2').removeClass('is-expanded'); }, 1000);
-                        setTimeout(function(){ $('.usrp-fb-2').addClass('is-collapsed'); }, 1300);
-                        // ADD COOKIES
-                        setCookie('feedback', 1);
-                      } else {
-                        $('#feedback-message').html(data);
-                      }
-                    },
-                    error: function (){
-                      $('#feedback-message').html('Problème lors du traitement de l\'envoi, si le problème persiste réessayez ultérieurement !');
-                    },
-                });
-              } else {
-                $('#feedback-message').html('L\'email et le message sont obligatoire !');
-              }
-            })
+            // $(".submitFeedback").click(function(){
+            //   var femail = $('#fEmail').val();
+            //   var fmessage = $('#fMessage').val();
+            //   if(femail.length != 0 && fmessage.length != 0){
+            //     // IF CARACTERES SPECIAUX
+            //     femail = femail.replace( "/", ' - ' );
+            //     fmessage = fmessage.replace( "/", ' - ' );
+            //     //SEND AJAX
+            //     urlAj = "{{ path('feedback-send', {'Femail' : 'thisemail', 'Fmessage' : 'thismessage'}) }}";
+            //     urlAj = urlAj.replace( "thisemail", femail );
+            //     urlAj = urlAj.replace( "thismessage", fmessage );
+            //     $.ajax({
+            //         async: true,
+            //         type: 'POST',
+            //         url : urlAj,
+            //         success: function (data) {
+            //           if(data == '1'){
+            //             $(".formFeedback").fadeOut( "slow" );
+            //             $('#feedback-message').html('Votre feedback a été envoyé avec succès !');
+            //             // CLOSE
+            //             setTimeout(function(){ $('.usrp-fb-2').removeClass('is-expanded'); }, 1000);
+            //             setTimeout(function(){ $('.usrp-fb-2').addClass('is-collapsed'); }, 1300);
+            //             // ADD COOKIES
+            //             setCookie('feedback', 1);
+            //           } else {
+            //             $('#feedback-message').html(data);
+            //           }
+            //         },
+            //         error: function (){
+            //           $('#feedback-message').html('Problème lors du traitement de l\'envoi, si le problème persiste réessayez ultérieurement !');
+            //         },
+            //     });
+            //   } else {
+            //     $('#feedback-message').html('L\'email et le message sont obligatoire !');
+            //   }
+            // })
 
             /* Newsletter
              * ------------------------------------------------------ */
